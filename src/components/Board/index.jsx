@@ -204,7 +204,7 @@ const Board = () => {
                 <>
                     {renderStage()}
                     <div 
-                        className={`w-50 p-2 border border-solid border-gray-500 rounded text-center cursor-pointer ${isButtonDisabled ? "bg-gray-200 cursor-not-allowed" : ""}`}
+                        className={`w-50 p-2 border border-solid rounded text-center cursor-pointer ${isButtonDisabled ? "border-gray-200 cursor-not-allowed" : "border-[#2fad88fa]"}`}
                         onClick={() => {
                            if (!isButtonDisabled) handleConfirm()
                         }}
