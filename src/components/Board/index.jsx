@@ -204,8 +204,10 @@ const Board = () => {
                 <>
                     {renderStage()}
                     <div 
-                        className={`w-50 p-2 border border-solid border-gray-500 rounded text-center cursor-pointer ${""}`}
-                        onClick={handleConfirm}
+                        className={`w-50 p-2 border border-solid border-gray-500 rounded text-center cursor-pointer ${isButtonDisabled ? "bg-gray-200 cursor-not-allowed" : ""}`}
+                        onClick={() => {
+                           if (!isButtonDisabled) handleConfirm()
+                        }}
                     >
                         確認選取
                     </div>
