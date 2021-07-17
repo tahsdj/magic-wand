@@ -59,6 +59,8 @@ const Board = () => {
         const record = getCurrentRecord()
         if (stageIndex + 1 < STAGE.length) {
             setStageIndex(index => index + 1)
+            setSelectedMaterial(m => m ? null : m)
+            setSelectedAction(a => a ? null : a)
         } else {
             setStageIndex(0)
             setRound(r => r + 1)
@@ -109,7 +111,8 @@ const Board = () => {
         switch(STAGE[stageIndex]?.id) {
             case 'draw_material':
                 return (
-                    <div >
+                    <>
+                        <h2 className="mb-6">請選擇一個材料</h2>
                         {currentMonsters.map(monster => (
                             <div className="flex flex-col items-center w-60 h-100 p-5 gap-3">
                                 <h2>{monster.name}</h2>
@@ -149,32 +152,35 @@ const Board = () => {
                                 </div>
                             </div>
                         ))}
-                    </div>
+                    </>
                 )
 
             case 'draw_action': {
                 return (
-                    <div className={`flex flex-row items-start gap-5 mb-10`}>
-                        {currentActions.map(action => {
-                            return (
-                                <div 
-                                    className={`flex flex-col items-center w-60 min-h-80 p-5 gap-3 border border-solid ${currentSelectedAction?.name === action.name ? "border-[#2fad88fa]" : "border-gray-200"}`}
-                                    onClick={()=>selectAction(action)}
-                                >
-                                    <h2>{action.name}</h2>
-                                    <p>{action.description}</p>
-                                    <div className="flex flex-col items-start w-full">
-                                        <h3>獲得效果:</h3>
-                                        {action.actions.map(e => (
-                                            <p>
-                                                {`選取素材攻擊力  ${e.operator} ${e.value}`}
-                                            </p>
-                                        ))}
+                    <>
+                        <h2 className="mb-6">請選擇一個製作方法</h2>
+                        <div className={`flex flex-row items-start gap-5 mb-10`}>
+                            {currentActions.map(action => {
+                                return (
+                                    <div 
+                                        className={`flex flex-col items-center w-60 min-h-80 p-5 gap-3 border border-solid ${currentSelectedAction?.name === action.name ? "border-[#2fad88fa]" : "border-gray-200"}`}
+                                        onClick={()=>selectAction(action)}
+                                    >
+                                        <h2>{action.name}</h2>
+                                        <p>{action.description}</p>
+                                        <div className="flex flex-col items-start w-full">
+                                            <h3>獲得效果:</h3>
+                                            {action.actions.map(e => (
+                                                <p>
+                                                    {`選取素材攻擊力  ${e.operator} ${e.value}`}
+                                                </p>
+                                            ))}
+                                        </div>
                                     </div>
-                                </div>
-                            )
-                        })}
-                    </div>
+                                )
+                            })}
+                        </div>
+                    </>
                 )
             }
             default:
@@ -195,7 +201,7 @@ const Board = () => {
     })()
     return (
         <div className="relative w-[500px] h-[500px] flex flex-col items-center p-[10px]">
-            <div className="absolute flex flex-col w-50 left-full transform translate-x-10 top-0 border border-solid rounder border-gray-300 p-3">
+            <div className="absolute flex flex-col w-50 left-full transform translate-x-10 top-0 border border-solid rounder border-gray-500 p-3">
                 <span>玩家資訊</span>
                 <span>{`攻擊力: ${userInfo.attack}`}</span>
             </div>
@@ -204,7 +210,7 @@ const Board = () => {
                 <>
                     {renderStage()}
                     <div 
-                        className={`w-50 p-2 border border-solid rounded text-center cursor-pointer ${isButtonDisabled ? "border-gray-200 cursor-not-allowed" : "border-[#2fad88fa]"}`}
+                        className={`w-50 p-2 border border-solid rounded text-center cursor-pointer ${isButtonDisabled ? "border-gray-200 cursor-not-allowed text-gray-400" : "border-[#2fad88fa]"}`}
                         onClick={() => {
                            if (!isButtonDisabled) handleConfirm()
                         }}
