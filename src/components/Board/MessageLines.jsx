@@ -41,7 +41,9 @@ const MessageLines = ({
     useEffect(() => {
         if (currentLine >= messages.length) {
             if (typeof onEnd === "function") {
-                onEnd()
+                setTimeout(() => {
+                    onEnd()
+                }, 200)
             }
         }
     }, [currentLine])

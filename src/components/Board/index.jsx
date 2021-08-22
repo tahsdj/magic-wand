@@ -4,7 +4,7 @@ import { MAX_ROUND, STAGE, MONSTERS, ACTIONS, TITLES } from '../../constants'
 
 import GridTemplate1 from '../../images/template-grid.png'
 import GridTemplate2 from '../../images/template-grid-wand.png'
-import TitleBg from '../../images/title.svg'
+import TitleBg from '../../images/title.png'
 
 
 import MessageLines from './MessageLines'
@@ -313,14 +313,19 @@ const templates = {
                 type: 'list',
                 items: [
                     {
-                        image: '🦴',
+                        image: "{{selected_material_image}}",
                         bg: '#BDC0BA'
                     },
                     {
-                        image: '🛠',
+                        text: "{{selected_method_description}}",
+                        image: "{{selected_action_image}}",
                         bg: '#81C7D4'
                     }
                 ],
+            },
+            {
+                text: '(請依指示開始在紙上繪製魔杖)',
+                type: 'text'
             },
             {
                 button: '>加工完成,尋找下一個材料',
@@ -589,7 +594,15 @@ const Board = () => {
     })())
     const [orderOfMonsters, setOrderOfMonsters] = useState(MONSTERS.sort(() => Math.random() - 0.5).map(m => m.id)) 
     const [currentMonsters, setCurrentMonsters] = useState([])
-    const [orderOfActions, setOrderOfActions] = useState([...ACTIONS, ...ACTIONS].sort(() => Math.random() - 0.5).map(m => m.id)) 
+    const [orderOfActions, setOrderOfActions] = useState((()=>{
+        const queue = []
+        for (let i = 0; i <= 7 ; i++) {
+            const sorted = ACTIONS.sort(() => Math.random() - 0.5).map(m => m.id)
+            const [first, second, ...res] = sorted
+            queue.push(first, second)
+        }
+       return queue
+    })()) 
     const [currentActions, setCurrentActions] = useState([])
     const [stageIndex, setStageIndex] = useState(0)
     const [userInfo, setUserInfo] = useState({
@@ -600,6 +613,7 @@ const Board = () => {
     const [currentSelectedMaterial, setSelectedMaterial] = useState()
     const [currentSelectedAction, setSelectedAction] = useState()
     const [showNextButton, setShowNextButton] = useState(false)
+    const [showConfirmModal, setShowConfirmModal] = useState(false)
 
     const reset = () => {
         setRound(0)
@@ -712,100 +726,6 @@ const Board = () => {
         setStageIndex(0)
         updateUserAttack()
     }, [round])
-
-
-    const renderStage = () => {
-        switch(STAGE[stageIndex]?.id) {
-            case 'draw_material':
-                return (
-                    <>
-                        <h2 className="mb-6">請選擇一個材料</h2>
-                        {currentMonsters.map(monster => (
-                            <div className="flex flex-col items-center w-60 h-100 p-5 gap-3">
-                                <h2>{monster.name}</h2>
-                                <p>{monster.story}</p>
-                                <div className="flex flex-row gap-2 items-center w-full justify-center gap-3">
-                                    {monster
-                                        .materials
-                                        .filter(m => {
-                                            return m.criteria.every(c => {
-                                                const [target, operator, value] = c.split("_")
-                                                switch(operator) {
-                                                    case "=":
-                                                        return userInfo[target] === Number(value)
-                                                    case ">=":
-                                                        return userInfo[target] >= Number(value)
-                                                    case "<=":
-                                                        return userInfo[target] <= Number(value)
-                                                    case "<":
-                                                        return userInfo[target] < Number(value)
-                                                    case ">":
-                                                        return userInfo[target] > Number(value)
-                                                    default:
-                                                        return false
-                                                }
-                                            })
-                                        })
-                                        .map(m => (
-                                            <div 
-                                                className={`flex flex-col p-3 items-start gap-1 border border-solid ${currentSelectedMaterial?.name === m.name ? "border-[#2fad88fa]" : "border-gray-200"} cursor-pointer`}
-                                                onClick={()=>{selectMaterial(m)}}
-                                            >
-                                                <h3>{m.name}</h3>
-                                                <p>{`攻擊＋ ${m.value}`}</p>
-                                            </div>
-                                        ))
-                                    }
-                                </div>
-                            </div>
-                        ))}
-                    </>
-                )
-
-            case 'draw_action': {
-                return (
-                    <>
-                        <h2 className="mb-6">請選擇一個製作方法</h2>
-                        <div className={`flex flex-row items-start gap-5 mb-10`}>
-                            {currentActions.map(action => {
-                                return (
-                                    <div 
-                                        className={`flex flex-col items-center w-60 min-h-80 p-5 gap-3 border border-solid ${currentSelectedAction?.name === action.name ? "border-[#2fad88fa]" : "border-gray-200"}`}
-                                        onClick={()=>selectAction(action)}
-                                    >
-                                        <h2>{action.name}</h2>
-                                        <p>{action.description}</p>
-                                        <div className="flex flex-col items-start w-full">
-                                            <h3>獲得效果:</h3>
-                                            {action.actions.map(e => (
-                                                <p>
-                                                    {`選取素材攻擊力  ${e.operator} ${e.value}`}
-                                                </p>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )
-                            })}
-                        </div>
-                    </>
-                )
-            }
-            default:
-                return null
-        }
-    }
-
-
-    const isButtonDisabled = (() => {
-        switch(STAGE[stageIndex]?.id) {
-            case 'draw_material':
-                return !currentSelectedMaterial
-            case 'draw_action':
-                return !currentSelectedAction
-            default:
-                return false
-        }
-    })()
 
     const canGetMaterialFromMonster = (m) => {
         return m.criteria.every(c => {
@@ -1021,7 +941,7 @@ const Board = () => {
                     <div className="flex flex-row items-start">
                         <div className="flex flex-col w-[350px] items-center mr-5">
                             <span className="text-white text-[24px] text-left w-full mb-1">你遇到了...</span>
-                            <img className="w-[350px] h-[350px]" src={monster.image}/>
+                            <img key={monster.name} className="w-[350px] h-[350px]" src={monster.image}/>
                             <h2 className="text-white text-[32px] mt-4">{monster.name}</h2>
                         </div>
 
@@ -1137,8 +1057,23 @@ const Board = () => {
                                             return (
                                                 <div className="flex flex-col items-center">
                                                     {item.title &&(<span className="text-[24px] mb-1">{item.title}</span>)}
-                                                    <div className="flex items-center justify-center w-[145px] h-[200px] rounded-[15px] border border-solid border-[#707070]" style={{backgroundColor: item.bg}}>
-                                                        {item.image && <span className="text-[75px]">{item.image}</span>}
+                                                    <div className="group relative flex items-center p-5 justify-center w-[145px] h-[200px] rounded-[15px] border border-solid border-[#707070]" style={{backgroundColor: item.bg}}>
+                                                        {item.image && (() => {
+                                                            if (item.image === "{{selected_material_image}}") return <img className="w-[75px] h-[75px]" src={currentSelectedMaterial?.image} />
+                                                            if (item.image === "{{selected_action_image}}") return (
+                                                                <div className="opacity-0 group-hover:opacity-100 absolute rounded-[15px] top-0 left-0 w-full h-full flex items-center justify-center bg-[rgba(255,255,255,.8)]">
+                                                                    <img className="w-[75px] h-[75px]" src={currentSelectedAction.image}/>
+                                                                </div>
+                                                            )
+                                                            return (
+                                                                <span className="text-[75px]">{item.image}</span>
+                                                            )
+                                                        })()}
+                                                        {item.text && (
+                                                            <p className="text-[16px] text-center">
+                                                                {item.text.replace("{{selected_method_description}}", currentSelectedAction.description)}
+                                                            </p>
+                                                        )}
                                                     </div>
                                                 </div>
                                             )
@@ -1174,6 +1109,7 @@ const Board = () => {
                                                         }}
                                                     >
                                                         <h3>{m.name}</h3>
+                                                        {m.image && <img className="w-[75px] h-[75px] mt-1 mb-2"  src={m.image} />}
                                                         <p>{`攻擊＋ ${m.value}`}</p>
                                                     </div>
                                                 ))}
@@ -1185,9 +1121,9 @@ const Board = () => {
                                             <div className="flex flex-row items-start gap-10 mt-5 mb-3">
                                                 {currentActions.map(action => (
                                                     <div 
-                                                        className={`bg-white flex flex-col p-2 items-center w-[145px] h-[200px] rounded-[15px] border border-solid border-[#707070] cursor-pointer`}
+                                                        className={`group relative bg-white flex flex-col p-2 items-center w-[145px] h-[200px] rounded-[15px] border border-solid border-[#707070] cursor-pointer`}
                                                         style={{
-                                                            border: currentSelectedAction?.name === action.name ? "3px solid #2fad88fa" : "3px solid transparent",
+                                                            border: currentSelectedAction?.name === action.name ? "3px solid #2fad88fa" : "3px solid rgb(218, 201, 166)",
                                                         }}
                                                         onClick={()=>{
                                                             selectAction(action)
@@ -1202,6 +1138,9 @@ const Board = () => {
                                                                     {`選取素材攻擊力  ${e.operator} ${e.value}`}
                                                                 </p>
                                                             ))}
+                                                        </div>
+                                                        <div className="opacity-0 group-hover:opacity-100 absolute rounded-[15px] top-0 left-0 w-full h-full flex items-center justify-center bg-[rgba(255,255,255,.8)]">
+                                                            {action.image && <img className="w-[75px] h-75px" src={action.image}/>}
                                                         </div>
                                                     </div>
                                                 ))}
@@ -1219,14 +1158,14 @@ const Board = () => {
                                     <div className="flex flex-row items-start w-[700px] gap-10 flex-wrap justify-center">
                                         {message.items.map(item => (
                                             <div 
-                                                className={`h-full bg-white flex flex-col p-5 items-center w-[145px] h-[200px] rounded-[15px] border border-solid border-[#707070] cusror-pointer`}
+                                                className={`h-full bg-white flex flex-col p-5 items-center w-[145px] h-[200px] rounded-[15px] border border-solid border-[#707070] cursor-pointer`}
                                                 onClick={()=>{
                                                     // selectAction(action)
                                                     if (item.name === "魔杖評等委員會") {
                                                         const targetPageIndex = pages.findIndex(page => page.id === "final-2")
                                                         setPageIndex(targetPageIndex)
                                                     } else if (item.name === "魔杖製作坊") {
-                                                        reset()
+                                                        setShowConfirmModal(true)
                                                     } else {
                                                         const targetPageIndex = pages.findIndex(page => page.id === "street-2")
                                                         setPages(ps => {
@@ -1272,10 +1211,19 @@ const Board = () => {
                                 return (
                                     <div className="flex flex-row items-center justify-center mt-5 max-w-[700px] gap-10 flex-wrap">
                                         {fitTitles.map(title => (
-                                             <div className="flex py-4 px-2 relative items-center justify-center">
-                                             <img className="absolute w-full h-full left-0 top-0" src={TitleBg}/>
-                                             <span className="text-white text-[24px]">{title.name}</span>
-                                         </div>
+                                             <div 
+                                                className="flex py-4 px-2 relative items-center justify-center w-[200px]"
+                                                // style={{
+                                                //     backgroundImage: `url(${TitleBg})`,
+                                                //     backgroundRepeat: 'no-repeat',
+                                                //     backgroundAttachment: 'fixed',
+                                                //     backgroundPosition: 'center',
+                                                //     backgroundSize: 'contain'
+                                                // }}
+                                            >
+                                                <img className="absolute w-full left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2" src={TitleBg}/>
+                                                <span className="text-white text-[24px]">{title.name}</span>
+                                            </div>
                                         ))}
                                     </div>
                                 )
@@ -1294,6 +1242,33 @@ const Board = () => {
     return (
         <>
             {renderPage()}
+            {showConfirmModal && (
+                <div className="fixed top-0 left-0 w-screen h-screen bg-[rgba(0,0,0,0.6)] z-99">
+                    <div className="flex flex-col items-center py-5 px-10 w-[350px] h-[200px] rounded-[10px] bg-white absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
+                        <p className="text-[24px] p-5 text-center">
+                            <span className="text-red-500 leading-normal">! 注意 ！</span><br/>
+                            即將離開製作新魔杖
+                        </p>
+                        <div className="flex flex-row w-full items-center justify-between mt-auto">
+                            <div 
+                                className="px-5 py-2 text-sm rounded-[5px] bg-[rgba(0,0,0,.3)] cursor-pointer"
+                                onClick={()=>setShowConfirmModal(false)}
+                            >
+                                取消
+                            </div>
+                            <div 
+                                className="px-5 py-2 text-sm rounded-[5px] bg-black text-white cursor-pointer"
+                                onClick={()=>{
+                                    reset()
+                                    setShowConfirmModal(false)
+                                }}
+                            >
+                                確認
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     )
 }
