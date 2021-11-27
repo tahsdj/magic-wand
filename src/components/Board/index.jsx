@@ -8,6 +8,9 @@ import TitleBg from '../../images/title.png'
 import PageBg from '../../images/page.svg'
 import BagIcon from '../../images/bag.png'
 import Logo from '../../images/logo.png'
+import Sketch1 from '../../images/sketch1.png'
+import Sketch2 from '../../images/sketch2.png'
+import Sketch3 from '../../images/sketch3.png'
 
 
 import MessageLines from './MessageLines'
@@ -56,16 +59,26 @@ const introPages = [
         bgColor: 'black',
         messages: [
             {
-                text: '你來到這間魔杖製作坊',
+                image: Sketch1,
+                type: 'image',
+                placement: 'left',
+                width: 350,
+            },
+            {
+                text: '魔杖師依照自身特質製作出不同的魔杖',
                 type: 'text',
                 marginTop: 100
             },
             {
-                text: '桌上散亂著前屋主遺留下的草圖和一本攤開的古老書籍',
+                text: '有的魔杖 擁有強大的攻擊力\n有的魔杖 充滿藝術價值\n有的魔杖從頭到尾 只使用一種工法',
                 type: 'text'
             },
             {
-                text: '翻開的那頁上寫著...',
+                text: '\n世界上有各式各樣的魔杖',
+                type: 'text'
+            },
+            {
+                text: '\n...',
                 type: 'text'
             },
             {
@@ -82,28 +95,58 @@ const introPages = [
         bgColor: 'black',
         messages: [
             {
-                text: '「製作一根好魔杖，好的素材和精湛的手藝不可或缺。」',
+                image: Sketch2,
+                type: 'image',
+                placement: 'left',
+                width: 350
+            },
+            {
+                text: '「 製作一根好魔杖，\n好的素材和精湛的手藝不可或缺。」',
                 type: 'text',
-                marginTop: 50,
+                marginTop: 30,
                 textAlign: 'left'
             },
             {
-                text: '「從魔物身上取得素材，但一隻魔物只能取得一種材料。」',
+                text: '—魔杖技術工會榮譽顧問',
+                type: 'text',
+                className: "text-xs",
+                textAlign: 'right'
+            },
+            {
+                text: '「從魔物身上取得素材，\n但一隻魔物只能取得一種材料。」',
                 type: 'text',
                 textAlign: 'left'
             },
             {
-                text: '「謹慎選擇一種製作方式，將材料融入魔杖中。」',
+                text: '—魔物保護團體執行長',
+                type: 'text',
+                className: "text-xs",
+                textAlign: 'right'
+            },
+            {
+                text: '「謹慎選擇一種製作方式，\n將材料融入魔杖中。」',
                 type: 'text',
                 textAlign: 'left'
             },
             {
-                text: '「經過七道工法後，你的魔杖將面臨考驗。」',
+                text: '—第一魔法學院 魔杖系系主任',
+                type: 'text',
+                className: "text-xs",
+                textAlign: 'right'
+            },
+            {
+                text: '「經過七道工法後，\n你的魔杖將面臨考驗。」',
                 type: 'text',
                 textAlign: 'left'
             },
             {
-                button: '>下一頁',
+                text: '—魔杖評等委員會1356任會長',
+                type: 'text',
+                className: "text-xs",
+                textAlign: 'right'
+            },
+            {
+                button: '>你決定開始製作魔杖',
                 type: 'button',
                 action: 'next_page'
             }
@@ -220,6 +263,34 @@ const introPages = [
                 action: 'next_page'
             }
         ]
+    },
+    {
+        id: 7,
+        type: 'introduction',
+        logo: '',
+        bgColor: 'black',
+        messages: [
+            {
+                text: '開始設計魔杖',
+                type: 'title',
+                placement: 'left'
+            },
+            {
+                text: '第三堂課:學習加工',
+                type: 'text',
+                placement: 'left'
+            },
+            {
+                text: '為了製作新的魔杖，\n你抱著興奮的心情踏出魔杖製作坊，\n出發尋找第一樣材料...',
+                type: 'text',
+                marginTop: 150
+            },
+            {
+                button: '>前往蒐集材料',
+                type: 'button',
+                action: 'next_page'
+            }
+        ]
     }
 ]
 
@@ -249,6 +320,11 @@ const templates = {
             },
             {
                 text: '你遇到了 {{monster_name}}，',
+                type: 'text',
+                placement: 'left'
+            },
+            {
+                text: '目前魔杖的攻擊力是 {{total_attack}}，',
                 type: 'text',
                 placement: 'left'
             },
@@ -434,271 +510,324 @@ const finalPages = [
 ]
 
 const stories = [
-    {
-        id: 'story-1',
-        type: 'story',
-        bgColor: 'black',
-        messages: [
-            // {
-            //     text: '',
-            //     type: 'text',
-            //     placement: 'left',
-            // },
-            {
-                text: '你收起評等結果走出委員會的大門，\n\n因為忙著製作魔杖而饑腸轆轆的你\n被委員會旁的便當店吸引住目光\n\n在踏進便當店前，\n突然想起魔杖師間廣傳的流言：\n\n「人們似乎根據杖師們的魔杖而改變對你的態度。」\n\n你決定帶著剛做好的魔杖驗證一下這個流言...',
-                type: 'text',
-                placement: 'right',
-                marginTop: 20
-            },
-            {
-                button: '>前往便當店',
-                type: 'button',
-                action: 'next_page',
-                placement: 'right',
-            }
-        ]
-    },
-    {
-        id: 'story-2',
-        type: 'story',
-        bgColor: 'black',
-        messages: [
-            {
-                text: '你走進便當店，\n看完外單決定點餐後，\n走向便當店阿姨。\n\n阿姨看著你的魔杖說：\n',
-                type: 'text',
-                placement: 'left',
-                marginTop: 100
-            },
-            {
-                type: 'text',
-                conditions: [
-                    {
-                        text: '唉唷! 同學你這把法杖，怎麼都金光??\n來給我瞧瞧... 哇～夭壽喔！來阿姨請你吃我們店內最豪華的便當。不要客氣！',
-                        criteria: [
-                            "materials_include-one_{千元大鈔,鑽石,淚之珍珠}",
-                        ]
-                    },
-                    {
-                        text: '同學，最近物價上漲，店租也漲，你用法杖黏著50元...也不是說不行啦...但是你還有錢吃飯嗎?\n我們店裡不能只買白飯喔!',
-                        criteria: [
-                            "materials_include-one_{50元銅板}",
-                        ]
-                    },
-                    {
-                        text: '夭壽喔，這是什麼？你真thái-ko! 這虼蚻ka-tsua̍h 呢? 這你也敢拿來做法杖？真的是... 這便當給你，快閃閃去！',
-                        criteria: [
-                            "materials_include-one_{蟑螂觸鬚}",
-                        ]
-                    },
-                    {
-                        text: '同學，要好好吃才能當個偉大的魔法師喔！',
-                        criteria: [
-                        ]
-                    }
-                ],
-                placement: 'left',
-            },
-            {
-                button: '上一頁',
-                type: 'button',
-                action: 'prev_page',
-                placement: 'left',
-            },
-            {
-                button: '>離開便當店',
-                type: 'button',
-                action: 'next_page',
-                placement: 'right',
-            }
-        ]
-    },
-    {
-        id: 'story-3',
-        type: 'story',
-        bgColor: 'black',
-        messages: [
-            {
-                text: '．．．不管怎樣還是得到便當了，\n雖然便當店阿姨怪怪的，\n但阿姨的便當很好吃，\n你很快就吃完了。\n\n你決定去找住在隔壁村的好友分享魔杖成果，\n卻發現口袋裡的錢在買完便當後所剩無幾，\n眼看再一分鐘就下午三點，\n銀行的鐵門正準備拉下，\n「等等！我要領錢！」\n你邊大喊邊跑進銀行',
-                type: 'text',
-                placement: 'left',
-                marginTop: 30
-            },
-            {
-                type: 'text',
-                conditions: [
-                    {
-                        text: '快要下班的銀行行員大罵你把紙鈔弄髒，覺得怎麼可以把紙鈔用成這樣。旁邊一位剛辦完儲匯手續的客人走來安慰你，他說他欣賞你那充滿藝術感的設計，那位銀行行員並不瞭解你的魔杖是如此有價值（粉絲+1）。',
-                        criteria: [
-                            "materials_include-one_{千元大鈔}",
-                            "methods_include-one_{退火}"
-                        ]
-                    },
-                    {
-                        text: '快要下班的銀行行員眼睛閃亮亮的，滿懷感謝的心，稱讚你是一個為錢錢用心的錢之勇者，最喜歡你這樣的顧客了。你滿頭問號的收下這份誇讚。',
-                        criteria: [
-                            "materials_include-one_{千元大鈔}",
-                            "methods_not-include-one_{退火}"
-                        ]
-                    },
-                    {
-                        text: '銀行行員忙著手邊的工作，頭都來不及抬起來就說：「要辦理借貸了話，請去隔壁櫃台喔！」你去了借貸櫃台之後，發現前面有大排長龍的杖師正準備籌措開業基金。但你知道你還不打算開店，於是直接離開。',
-                        criteria: [
-                        ]
-                    }
-                ],
-                marginTop: 30,
-                placement: 'right',
-            },
-            {
-                button: '上一頁',
-                type: 'button',
-                action: 'prev_page',
-                placement: 'left',
-            },
-            {
-                button: '>離開銀行',
-                type: 'button',
-                action: 'next_page',
-                placement: 'right',
-            }
-        ]
-    },
-    {
-        id: 'story-4',
-        type: 'story',
-        bgColor: 'black',
-        messages: [
-            {
-                text: '從銀行離開後，眼看太陽快要下山，\n雖然聽說樹林裡有著危險的生物，\n但是你現在有著全新的強力法杖，\n抄點近路應該沒關係，你心想。\n\n才剛走進樹林五分鐘，\n突然有一片黑影掠過，\n你拿起魔杖壯膽，\n抬起頭\n',
-                type: 'text',
-                placement: 'left',
-                marginTop: 30
-            },
-            {
-                type: 'text',
-                conditions: [
-                    {
-                        text: '有一隻烏鴉正眼紅的看著你的法杖，作勢要搶奪你法杖上的物品，法杖上的每個閃光，成為了烏鴉怒氣的催化劑，你與它展開了一番纏鬥',
-                        criteria: [
-                                (userInfo) => {
-                                    if (userInfo.history.filter(data => data.type === "material").some(m => ["鑽石","淚之珍珠", "寶石塊", "寶石粉", "50元銅板"].includes(m.name)).length > 0) {
-                                        return userInfo.attack < 35*1.1
-                                    }
-                                    return userInfo.attack < 35
-                                }
-                        ]
-                    },
-                    {
-                        text: '發現有一直烏鴉，悵然地看著你的法杖。烏鴉意識到自己有可能成為收集品的瞬間，心中頓時充滿著狂喜與恐懼，複雜的情緒使他落下了所有的羽毛，急速老化而死。',
-                        criteria: [
-                            "materials_include-one_{鑽石,淚之珍珠,寶石塊,寶石粉,50元銅板}",
-                            "attack_>=_35",
-                            "materials_include-one_{鴉羽}"
-                        ]
-                    },
-                    {
-                        text: '但你沒有看到任何東西，但你總感覺有股視線在盯著你 -- 牠暫時還不想奪取，但牠會一直跟著你，等待你毫無防備的時候。',
-                        criteria: [
-                            (userInfo) => {
-                                if (userInfo.history.filter(data => data.type === "material").some(m => ["鑽石","淚之珍珠", "寶石塊", "寶石粉", "50元銅板"].includes(m.name)).length > 0) {
-                                    return userInfo.attack >= 35*1.1
-                                }
-                                return userInfo.attack >= 35
-                            }
-                        ]
-                    },
-                    {
-                        text: '你發現了一隻烏鴉，你隱約覺得牠好像在訕笑。你的魔杖對於這個偏執狂而言毫無吸引力，牠開始發出「鴉、鴉、鴉」的叫聲，並向你展現出他的戰利品，爾後，便拍拍翅膀走鴉了。',
-                        criteria: []
-                    }
-                ],
-                placement: 'left',
-            },
-            {
-                button: '上一頁',
-                type: 'button',
-                action: 'prev_page',
-                placement: 'left',
-            },
-            {
-                button: '>離開樹林',
-                type: 'button',
-                action: 'next_page',
-                placement: 'right',
-            }
-        ]
-    },
-    {
-        id: 'story-5',
-        type: 'story',
-        bgColor: 'black',
-        messages: [
-            {
-                text: '你總算走出樹林，\n深深感受到欲速則不達。\n\n在前往朋友家的路上，\n一隻長相奇異且巨大的貓突然擋在你眼前，\n它的身後是一座村莊，\n眼看著它即將要破壞了村莊，\n於是你掏出法杖施法，\n結果',
-                type: 'text',
-                placement: 'left',
-                marginTop: 30
-            },
-            {
-                type: 'text',
-                conditions: [
-                    {
-                        text: '魔貓直接倒在村落裡露出肚皮給你摸，但是村落因此全滅。',
-                        criteria: [
-                            "materials_include-one_{貓頭餅乾}",
-                        ]
-                    },
-                    {
-                        text: '魔貓摀住耳朵痛苦不堪，慢慢的縮小變成一隻平凡的小貓。你被村落的人們膜拜為勇者。',
-                        criteria: [
-                            "methods-[咒文加護]_>=_2"
-                        ]
-                    },
-                    {
-                        text: '魔貓發現你的戰利品比他還多，簡直是獵物殺手，他決定拜你為師，從此你有了一隻超巨大的夥伴了。',
-                        criteria: [
-                            "materials_include-one_{有毛毛蟲,蟑螂觸鬚,鴉羽,狼毫,斷尾}",
-                        ]
-                    },
-                    {
-                        text: '你你在魔貓的胃裡，以為得搭著帳篷度過餘生。但魔貓肚裡簡直是一座神奇的冒險之塔，你將開啟了全新的冒險篇章（本作未收錄）。',
-                        criteria: [
-                        ]
-                    }
-                ],
-                placement: 'left',
-            },
-            {
-                button: '上一頁',
-                type: 'button',
-                action: 'prev_page',
-                placement: 'left',
-            },
-            {
-                button: '>下一頁',
-                type: 'button',
-                action: 'next_page',
-                placement: 'right',
-            }
-        ]
-    },
+    // {
+    //     id: 'story-1',
+    //     type: 'story',
+    //     bgColor: 'black',
+    //     messages: [
+    //         // {
+    //         //     text: '',
+    //         //     type: 'text',
+    //         //     placement: 'left',
+    //         // },
+    //         {
+    //             text: '你收起評等結果走出委員會的大門，\n\n因為忙著製作魔杖而饑腸轆轆的你\n被委員會旁的便當店吸引住目光\n\n在踏進便當店前，\n突然想起魔杖師間廣傳的流言：\n\n「人們似乎根據杖師們的魔杖而改變對你的態度。」\n\n你決定帶著剛做好的魔杖驗證一下這個流言...',
+    //             type: 'text',
+    //             placement: 'right',
+    //             marginTop: 20
+    //         },
+    //         {
+    //             button: '>前往便當店',
+    //             type: 'button',
+    //             action: 'next_page',
+    //             placement: 'right',
+    //         }
+    //     ]
+    // },
+    // {
+    //     id: 'story-2',
+    //     type: 'story',
+    //     bgColor: 'black',
+    //     messages: [
+    //         {
+    //             text: '你走進便當店，\n看完外單決定點餐後，\n走向便當店阿姨。\n\n阿姨看著你的魔杖說：\n',
+    //             type: 'text',
+    //             placement: 'left',
+    //             marginTop: 100
+    //         },
+    //         {
+    //             type: 'text',
+    //             conditions: [
+    //                 {
+    //                     text: '唉唷! 同學你這把法杖，怎麼都金光??\n來給我瞧瞧... 哇～夭壽喔！來阿姨請你吃我們店內最豪華的便當。不要客氣！',
+    //                     criteria: [
+    //                         "materials_include-one_{千元大鈔,鑽石,淚之珍珠}",
+    //                     ]
+    //                 },
+    //                 {
+    //                     text: '同學，最近物價上漲，店租也漲，你用法杖黏著50元...也不是說不行啦...但是你還有錢吃飯嗎?\n我們店裡不能只買白飯喔!',
+    //                     criteria: [
+    //                         "materials_include-one_{50元銅板}",
+    //                     ]
+    //                 },
+    //                 {
+    //                     text: '夭壽喔，這是什麼？你真thái-ko! 這虼蚻ka-tsua̍h 呢? 這你也敢拿來做法杖？真的是... 這便當給你，快閃閃去！',
+    //                     criteria: [
+    //                         "materials_include-one_{蟑螂觸鬚}",
+    //                     ]
+    //                 },
+    //                 {
+    //                     text: '同學，要好好吃才能當個偉大的魔法師喔！',
+    //                     criteria: [
+    //                     ]
+    //                 }
+    //             ],
+    //             placement: 'left',
+    //         },
+    //         {
+    //             button: '上一頁',
+    //             type: 'button',
+    //             action: 'prev_page',
+    //             placement: 'left',
+    //         },
+    //         {
+    //             button: '>離開便當店',
+    //             type: 'button',
+    //             action: 'next_page',
+    //             placement: 'right',
+    //         }
+    //     ]
+    // },
+    // {
+    //     id: 'story-3',
+    //     type: 'story',
+    //     bgColor: 'black',
+    //     messages: [
+    //         {
+    //             text: '．．．不管怎樣還是得到便當了，\n雖然便當店阿姨怪怪的，\n但阿姨的便當很好吃，\n你很快就吃完了。\n\n你決定去找住在隔壁村的好友分享魔杖成果，\n卻發現口袋裡的錢在買完便當後所剩無幾，\n眼看再一分鐘就下午三點，\n銀行的鐵門正準備拉下，\n「等等！我要領錢！」\n你邊大喊邊跑進銀行',
+    //             type: 'text',
+    //             placement: 'left',
+    //             marginTop: 30
+    //         },
+    //         {
+    //             type: 'text',
+    //             conditions: [
+    //                 {
+    //                     text: '快要下班的銀行行員大罵你把紙鈔弄髒，覺得怎麼可以把紙鈔用成這樣。旁邊一位剛辦完儲匯手續的客人走來安慰你，他說他欣賞你那充滿藝術感的設計，那位銀行行員並不瞭解你的魔杖是如此有價值（粉絲+1）。',
+    //                     criteria: [
+    //                         "materials_include-one_{千元大鈔}",
+    //                         "methods_include-one_{退火}"
+    //                     ]
+    //                 },
+    //                 {
+    //                     text: '快要下班的銀行行員眼睛閃亮亮的，滿懷感謝的心，稱讚你是一個為錢錢用心的錢之勇者，最喜歡你這樣的顧客了。你滿頭問號的收下這份誇讚。',
+    //                     criteria: [
+    //                         "materials_include-one_{千元大鈔}",
+    //                         "methods_not-include-one_{退火}"
+    //                     ]
+    //                 },
+    //                 {
+    //                     text: '銀行行員忙著手邊的工作，頭都來不及抬起來就說：「要辦理借貸了話，請去隔壁櫃台喔！」你去了借貸櫃台之後，發現前面有大排長龍的杖師正準備籌措開業基金。但你知道你還不打算開店，於是直接離開。',
+    //                     criteria: [
+    //                     ]
+    //                 }
+    //             ],
+    //             marginTop: 30,
+    //             placement: 'right',
+    //         },
+    //         {
+    //             button: '上一頁',
+    //             type: 'button',
+    //             action: 'prev_page',
+    //             placement: 'left',
+    //         },
+    //         {
+    //             button: '>離開銀行',
+    //             type: 'button',
+    //             action: 'next_page',
+    //             placement: 'right',
+    //         }
+    //     ]
+    // },
+    // {
+    //     id: 'story-4',
+    //     type: 'story',
+    //     bgColor: 'black',
+    //     messages: [
+    //         {
+    //             text: '從銀行離開後，眼看太陽快要下山，\n雖然聽說樹林裡有著危險的生物，\n但是你現在有著全新的強力法杖，\n抄點近路應該沒關係，你心想。\n\n才剛走進樹林五分鐘，\n突然有一片黑影掠過，\n你拿起魔杖壯膽，\n抬起頭\n',
+    //             type: 'text',
+    //             placement: 'left',
+    //             marginTop: 30
+    //         },
+    //         {
+    //             type: 'text',
+    //             conditions: [
+    //                 {
+    //                     text: '有一隻烏鴉正眼紅的看著你的法杖，作勢要搶奪你法杖上的物品，法杖上的每個閃光，成為了烏鴉怒氣的催化劑，你與它展開了一番纏鬥',
+    //                     criteria: [
+    //                             (userInfo) => {
+    //                                 if (userInfo.history.filter(data => data.type === "material").some(m => ["鑽石","淚之珍珠", "寶石塊", "寶石粉", "50元銅板"].includes(m.name)).length > 0) {
+    //                                     return userInfo.attack < 35*1.1
+    //                                 }
+    //                                 return userInfo.attack < 35
+    //                             }
+    //                     ]
+    //                 },
+    //                 {
+    //                     text: '發現有一直烏鴉，悵然地看著你的法杖。烏鴉意識到自己有可能成為收集品的瞬間，心中頓時充滿著狂喜與恐懼，複雜的情緒使他落下了所有的羽毛，急速老化而死。',
+    //                     criteria: [
+    //                         "materials_include-one_{鑽石,淚之珍珠,寶石塊,寶石粉,50元銅板}",
+    //                         "attack_>=_35",
+    //                         "materials_include-one_{鴉羽}"
+    //                     ]
+    //                 },
+    //                 {
+    //                     text: '但你沒有看到任何東西，但你總感覺有股視線在盯著你 -- 牠暫時還不想奪取，但牠會一直跟著你，等待你毫無防備的時候。',
+    //                     criteria: [
+    //                         (userInfo) => {
+    //                             if (userInfo.history.filter(data => data.type === "material").some(m => ["鑽石","淚之珍珠", "寶石塊", "寶石粉", "50元銅板"].includes(m.name)).length > 0) {
+    //                                 return userInfo.attack >= 35*1.1
+    //                             }
+    //                             return userInfo.attack >= 35
+    //                         }
+    //                     ]
+    //                 },
+    //                 {
+    //                     text: '你發現了一隻烏鴉，你隱約覺得牠好像在訕笑。你的魔杖對於這個偏執狂而言毫無吸引力，牠開始發出「鴉、鴉、鴉」的叫聲，並向你展現出他的戰利品，爾後，便拍拍翅膀走鴉了。',
+    //                     criteria: []
+    //                 }
+    //             ],
+    //             placement: 'left',
+    //         },
+    //         {
+    //             button: '上一頁',
+    //             type: 'button',
+    //             action: 'prev_page',
+    //             placement: 'left',
+    //         },
+    //         {
+    //             button: '>離開樹林',
+    //             type: 'button',
+    //             action: 'next_page',
+    //             placement: 'right',
+    //         }
+    //     ]
+    // },
+    // {
+    //     id: 'story-5',
+    //     type: 'story',
+    //     bgColor: 'black',
+    //     messages: [
+    //         {
+    //             text: '你總算走出樹林，\n深深感受到欲速則不達。\n\n在前往朋友家的路上，\n一隻長相奇異且巨大的貓突然擋在你眼前，\n它的身後是一座村莊，\n眼看著它即將要破壞了村莊，\n於是你掏出法杖施法，\n結果',
+    //             type: 'text',
+    //             placement: 'left',
+    //             marginTop: 30
+    //         },
+    //         {
+    //             type: 'text',
+    //             conditions: [
+    //                 {
+    //                     text: '魔貓直接倒在村落裡露出肚皮給你摸，但是村落因此全滅。',
+    //                     criteria: [
+    //                         "materials_include-one_{貓頭餅乾}",
+    //                     ]
+    //                 },
+    //                 {
+    //                     text: '魔貓摀住耳朵痛苦不堪，慢慢的縮小變成一隻平凡的小貓。你被村落的人們膜拜為勇者。',
+    //                     criteria: [
+    //                         "methods-[咒文加護]_>=_2"
+    //                     ]
+    //                 },
+    //                 {
+    //                     text: '魔貓發現你的戰利品比他還多，簡直是獵物殺手，他決定拜你為師，從此你有了一隻超巨大的夥伴了。',
+    //                     criteria: [
+    //                         "materials_include-one_{有毛毛蟲,蟑螂觸鬚,鴉羽,狼毫,斷尾}",
+    //                     ]
+    //                 },
+    //                 {
+    //                     text: '你你在魔貓的胃裡，以為得搭著帳篷度過餘生。但魔貓肚裡簡直是一座神奇的冒險之塔，你將開啟了全新的冒險篇章（本作未收錄）。',
+    //                     criteria: [
+    //                     ]
+    //                 }
+    //             ],
+    //             placement: 'left',
+    //         },
+    //         {
+    //             button: '上一頁',
+    //             type: 'button',
+    //             action: 'prev_page',
+    //             placement: 'left',
+    //         },
+    //         {
+    //             button: '>下一頁',
+    //             type: 'button',
+    //             action: 'next_page',
+    //             placement: 'right',
+    //         }
+    //     ]
+    // },
     {
         id: 'story-6',
         type: 'story',
         bgColor: 'black',
         messages: [
             {
-                text: '統籌 什麼什麼工作坊\n\n遊戲設計\n\n劇本、角色設計\n\n介面設計\n程式設計\n美術設計　廠\n平衡測試　\n感謝名單\n',
+                text: '你出色的完成了魔杖！\n你已經是一個成熟的魔杖師了，\n你可以：',
                 type: 'text',
                 placement: 'left',
-                marginTop: 50,
-                textAlign: 'left'
+                marginTop: 50
             },
             {
-                text: '測試員的魔杖們',
-                marginTop: 50,
+                text: '\n點以下hashtag',
+                type: 'text',
+                placement: 'left',
+            },
+            {
+                text: (
+                    <div className="block items-center">
+                        <span 
+                            className="font-bold text-white cursor-pointer"
+                            onClick={()=>{
+                                window.open("https://www.instagram.com/explore/tags/魔杖師/", '_blank')
+                            }}
+                        >#魔杖師</span>
+                        <span 
+                            className="font-bold text-white ml-1 cursor-pointer"
+                            onClick={()=>{
+                                window.open("https://www.instagram.com/explore/tags/5w_wand/", '_blank')
+                            }}
+                        >#5w_wand</span>
+                    </div>
+                ),
+                type: 'text',
+                placement: 'left',
+            },
+            {
+                text: '欣賞其他魔杖',
+                type: 'text',
+                placement: 'left',
+            },
+            {
+                text: '\n或是\n分享你的魔杖！！',
+                type: 'text',
+                placement: 'left',
+            },
+            {
+                text: 'Special Thanks to 遠古魔杖師',
+                type: 'text',
+                marginTop: 100,
+                placement: 'right',
+            },
+            {
+                text: '統籌、 遊戲設計、劇本、角色設計',
+                type: 'text',
+                className: 'text-sm',
+                textAlign: 'left',
+                marginTop: 40,
+                placement: 'right',
+            },
+            {
+                text: '什麼什麼工作坊',
                 type: 'text',
                 placement: 'right',
+            },
+            {
+                text: '\n介面設計　yeee\n程式設計　Paular Bear\n美術設計　廠\n平衡測試　EN\n',
+                type: 'text',
+                placement: 'right',
+                textAlign: 'left'
             },
             {
                 button: '上一頁',
@@ -912,7 +1041,7 @@ const streetPages = [
 ]
 
 const initPages = () => {
-    const pages = Array(7).fill([0, 1, 2, 3]).reduce((acc, steps, index) => {
+    const pages = Array(1).fill([0, 1, 2, 3]).reduce((acc, steps, index) => {
         return acc.concat(steps.map(step => {
             return {
                 ...templates[`round_${step}`],
@@ -1289,7 +1418,7 @@ const Board = () => {
                 const conditionText = message.conditions ? getResult(message.conditions)?.[0]?.text || '': ''
                 return (
                     <p 
-                        className={`text-[18px] text-center max-w-[370px] whitespace-pre-line ${message.action ? "cursor-pointer" : ""}`}
+                        className={`w-full text-center max-w-[370px] whitespace-pre-line ${message.action ? "cursor-pointer" : ""} ${message.className || 'text-[18px]'}`}
                         style={{
                             color: currentPage.bgColor === "black" || currentPage.bgColor === '#006284' ? "white" : "black", lineHeight: 2,
                             marginTop: message.marginTop,
@@ -1298,9 +1427,12 @@ const Board = () => {
                         onClick={()=>{
                             if (message.action) {
                                 switch(message.action) {
-                                    case 'reset':
+                                    case 'reset': {
                                         reset()
+                                        const index = pages.findIndex(p => p.id === 7)
+                                        setPageIndex(index)
                                         break;
+                                    }
                                     default:
                                         break;
                                 }
@@ -1308,7 +1440,8 @@ const Board = () => {
                         }}
                     >
                         {conditionText}
-                        {(message?.text || '')
+                        {typeof message?.text === "string" && (
+                            (message?.text || '')
                             .replace('{{round}}', round + 1)
                             .replace('{{monster_name}}', monster?.name)
                             .replace('{{monster_description}}', monster?.story)
@@ -1335,7 +1468,8 @@ const Board = () => {
                                 }, 0)
                             })())
                             .replace('{{total_attack}}', userInfo.attack)
-                        }
+                        )}
+                        {typeof message?.text !== "string" && message.text}
                     </p>
                 )
             }
@@ -1381,7 +1515,7 @@ const Board = () => {
                         {message.items.map(item => {
                             return (
                                 <div className="flex flex-col items-center">
-                                    <div className="group relative flex items-center p-5 justify-center w-[115px] h-[180px] rounded-[15px] border border-solid border-[#707070]" style={{backgroundColor: item.bg}}>
+                                    <div className="group relative flex items-center py-5 px-1 justify-center w-[115px] h-[180px] rounded-[15px] border border-solid border-[#707070]" style={{backgroundColor: item.bg}}>
                                         {item.image && (() => {
                                             if (item.image === "{{selected_material_image}}") return <img className="w-[75px] h-[75px]" src={currentSelectedMaterial?.image} />
                                             if (item.image === "{{selected_action_image}}") return (
@@ -1393,7 +1527,7 @@ const Board = () => {
                                                 <span className="text-[75px]">{item.image}</span>
                                             )
                                         })()}
-                                        {item.title &&(<span className="text-[18px]">{item.title}</span>)}
+                                        {item.title &&(<span className="text-[16px]">{item.title}</span>)}
                                         {item.text && (
                                             <p className="text-[16px] text-center">
                                                 {item.text.replace("{{selected_method_description}}", currentSelectedAction.description)}
@@ -1406,11 +1540,13 @@ const Board = () => {
                     </div>
                 )
             case 'image':
+                console.log('message: ', message)
                 return (
                     <img 
                         className="mt-5 w-[200px]" src={message.image}
                         style={{
                             marginTop: message.marginTop,
+                            width: message.width
                         }}
                     />
                 )
@@ -1424,7 +1560,7 @@ const Board = () => {
                         return (
                             <>
                                 <div 
-                                    className="flex px-4 py-2 text-[20px] rounded-[20px] items-center justify-center mt-15 mb-4"
+                                    className="flex px-4 py-2 text-[20px] rounded-[20px] items-center justify-center mt-15 mb-4 font-bold"
                                     style={{
                                         color: currentPage.bgColor === "black" || currentPage.bgColor === '#006284' ? "white" : "black", 
                                     }}
@@ -1465,7 +1601,7 @@ const Board = () => {
                         return (
                             <>
                             <div 
-                                className="flex px-4 py-2 text-[20px] rounded-[20px] items-center justify-center mt-15 mb-4"
+                                className="flex px-1 py-2 text-[20px] rounded-[20px] items-center justify-center mt-15 mb-4 font-bold"
                                 style={{
                                     color: currentPage.bgColor === "black" || currentPage.bgColor === '#006284' ? "white" : "black", 
                                 }}

@@ -104,9 +104,6 @@ const ResultPage = ({
                                 }}
                             />
                         </div>
-                        <div className="text-white text-[18px] w-full text-center mt-5">
-                            #魔杖評等結果
-                        </div>
                     </>
                 )
         }
@@ -239,9 +236,6 @@ const ResultPage = ({
                         case '3':
                             return (
                                 <>
-                                    <div className="absolute flex left-1/2 transform -translate-x-1/2 top-[94px] text-white text-[20px]">
-                                        {currentPage.title}
-                                    </div>
                                     <Page>
                                         {leftContent}
                                     </Page>
