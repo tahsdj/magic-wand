@@ -5,9 +5,15 @@ import { MAX_ROUND, STAGE, MONSTERS, ACTIONS, TITLES } from '../../constants'
 import GridTemplate1 from '../../images/template-grid.png'
 import GridTemplate2 from '../../images/template-grid-wand.png'
 import TitleBg from '../../images/title.png'
+import PageBg from '../../images/page.svg'
+import BagIcon from '../../images/bag.png'
+import Logo from '../../images/logo.png'
 
 
 import MessageLines from './MessageLines'
+import Upload from './upload'
+import ResultPage from './ResultPage'
+import Book, { Page } from './Book'
 
 const NUM_OF_MONSTERCARD_PER_ROUND = 1;
 const NUM_OF_ACTIONCARD_PER_ROUND = 2;
@@ -21,7 +27,8 @@ const introPages = [
         messages: [
             {
                 text: '有一群製作魔杖的人',
-                type: 'text'
+                type: 'text',
+                marginTop: 100
             },
             {
                 text: '他們為了這個世界',
@@ -50,7 +57,8 @@ const introPages = [
         messages: [
             {
                 text: '你來到這間魔杖製作坊',
-                type: 'text'
+                type: 'text',
+                marginTop: 100
             },
             {
                 text: '桌上散亂著前屋主遺留下的草圖和一本攤開的古老書籍',
@@ -75,19 +83,24 @@ const introPages = [
         messages: [
             {
                 text: '「製作一根好魔杖，好的素材和精湛的手藝不可或缺。」',
-                type: 'text'
+                type: 'text',
+                marginTop: 50,
+                textAlign: 'left'
             },
             {
                 text: '「從魔物身上取得素材，但一隻魔物只能取得一種材料。」',
-                type: 'text'
+                type: 'text',
+                textAlign: 'left'
             },
             {
                 text: '「謹慎選擇一種製作方式，將材料融入魔杖中。」',
-                type: 'text'
+                type: 'text',
+                textAlign: 'left'
             },
             {
                 text: '「經過七道工法後，你的魔杖將面臨考驗。」',
-                type: 'text'
+                type: 'text',
+                textAlign: 'left'
             },
             {
                 button: '>下一頁',
@@ -103,16 +116,19 @@ const introPages = [
         bgColor: '#DAC9A6',
         messages: [
             {
-                text: '🧚開始設計魔杖',
-                type: 'text'
+                text: '開始設計魔杖',
+                type: 'title',
+                placement: 'left'
             },
             {
                 text: '第一堂課:準備魔杖設計圖紙',
-                type: 'text'
+                type: 'text',
+                placement: 'left'
             },
             {
-                text: '拿一張空白的正方形紙，折出九宮格的格線後攤平',
-                type: 'text'
+                text: '拿一張空白的方形紙，折出九宮格的格線後攤平',
+                type: 'text',
+                marginTop: 50
             },
             {
                 image: GridTemplate1,
@@ -132,16 +148,19 @@ const introPages = [
         bgColor: '#DAC9A6',
         messages: [
             {
-                text: '🧚開始設計魔杖',
-                type: 'text'
+                text: '開始設計魔杖',
+                type: 'title',
+                placement: 'left'
             },
             {
                 text: '第二堂課:繪製魔杖雛型',
-                type: 'text'
+                type: 'text',
+                placement: 'left'
             },
             {
                 text: '將魔杖雛形繪製於空白紙上',
-                type: 'text'
+                type: 'text',
+                marginTop: 60
             },
             {
                 image: GridTemplate2,
@@ -161,12 +180,14 @@ const introPages = [
         bgColor: '#DAC9A6',
         messages: [
             {
-                text: '🧚開始設計魔杖',
-                type: 'text'
+                text: '開始設計魔杖',
+                type: 'title',
+                placement: 'left'
             },
             {
                 text: '第三堂課:學習加工',
-                type: 'text'
+                type: 'text',
+                placement: 'left'
             },
             {
                 text: '你必須從生物身上取得材料，並以特定的製作方法加工到魔杖上\n每一次加工會改變魔杖形狀和素質',
@@ -176,12 +197,10 @@ const introPages = [
                 items: [
                     {
                         title: '材料',
-                        image: '🦴',
                         bg: 'white'
                     },
                     {
                         title: '製作方法',
-                        image: '🛠',
                         bg: '#81C7D4'
                     }
                 ],
@@ -216,35 +235,44 @@ const templates = {
     'round_1': {
         type: 'making',
         logo: '',
-        bgColor: '#DAC9A6',
+        bgColor: 'black',
         messages: [
             {
-                text: '🧚開始設計魔杖',
-                type: 'text'
+                text: '開始設計魔杖',
+                type: 'title',
+                placement: 'left'
             },
             {
                 text: '七道工法中的第{{round}}道工法',
-                type: 'text'
+                type: 'text',
+                placement: 'left'
             },
             {
                 text: '你遇到了 {{monster_name}}，',
-                type: 'text'
+                type: 'text',
+                placement: 'left'
             },
             {
                 text: '如果你悄悄接近，可以獲得 {{material_1}}',
-                type: 'text'
+                type: 'text',
+                placement: 'left'
             },
             {
                 text: '或著成功揮動魔杖，可以獲得 {{material_2}}',
-                type: 'text'
+                type: 'text',
+                placement: 'left'
             },
             {
-                title: '你選擇: (請選取材料)',
+                title: '你選擇:',
                 type: 'selection',
                 items: []
             },
             {
-                button: '>確定將材料放進包包，返回製作坊',
+                button: (
+                    <div className="flex flex-row items-center underline">
+                        {">開始行動"}
+                    </div>
+                ),
                 type: 'button',
                 action: 'next_page'
             }
@@ -256,24 +284,29 @@ const templates = {
         bgColor: '#DAC9A6',
         messages: [
             {
-                text: '🧚開始設計魔杖',
-                type: 'text'
+                text: '開始設計魔杖',
+                type: 'title',
+                placement: 'left'
             },
             {
                 text: '七道工法中的第 {{round}} 道工法',
-                type: 'text'
+                type: 'text',
+                placement: 'left'
             },
             {
-                text: '雖然可以打贏，但你還是選擇了偷偷撿拾',
-                type: 'text'
+                text: '你順利打贏，並獲得了獎勵',
+                type: 'text',
+                placement: 'left'
             },
             {
                 text: '你帶著 {{selected_material}} 回到製作坊',
-                type: 'text'
+                type: 'text',
+                placement: 'left'
             },
             {
                 text: '突然靈光乍現想到以下製作方式',
-                type: 'text'
+                type: 'text',
+                placement: 'left'
             },
             {
                 title: '你選擇:(請決定要用哪一種製作方式)',
@@ -293,20 +326,19 @@ const templates = {
         bgColor: '#DAC9A6',
         messages: [
             {
-                text: '🧚開始設計魔杖',
-                type: 'text'
+                text: '開始設計魔杖',
+                type: 'title',
+                placement: 'left'
             },
             {
                 text: '七道工法中的第 {{round}} 道工法',
-                type: 'text'
+                type: 'text',
+                placement: 'left'
             },
             {
-                text: '你將 {{material}} 以 {{method}} 加工到魔杖上',
-                type: 'text'
-            },
-            {
-                text: '魔杖發生了變化',
-                type: 'text'
+                text: '(請依指示開始在紙上繪製魔杖)',
+                type: 'text',
+                placement: 'left'
             },
             {
                 title: '你選擇:(請決定要用哪一種製作方式)',
@@ -324,7 +356,15 @@ const templates = {
                 ],
             },
             {
-                text: '(請依指示開始在紙上繪製魔杖)',
+                text: '你將 {{material}} 以 {{method}} 加工到魔杖上',
+                type: 'text'
+            },
+            {
+                text: '魔杖發生了變化',
+                type: 'text'
+            },
+            {
+                text: '魔杖的基礎攻擊力增加了 {{attack_increment}}',
                 type: 'text'
             },
             {
@@ -340,38 +380,24 @@ const templates = {
 const finalPages = [
     {
         id: 'final-1',
-        bgColor: '#006284',
+        bgColor: 'black',
         type: 'introduction',
-        logo: '🧙🧙🧙',
-        messages: [
-            {
-                text: '經過七道工法，你完成了魔杖。',
-                type: 'text'
-            },
-            {
-                text: '你前去魔杖評等委員會，',
-                type: 'text'
-            },
-            {
-                text: '',
-                type: 'text'
-            },
-            {
-                text: '在漫長的等待後，魔杖評等委員會將評等結果交給你：',
-                type: 'text'
-            },
-            {
-                button: '>打開評等結果',
-                type: 'button',
-                action: 'next_page'
-            }
-        ]
+        mode: 'final',
+        next: '>將魔杖交給委員會'
     },
     {
         id: 'final-2',
+        bgColor: 'black',
+        type: 'introduction',
+        mode: 'final',
+        next: '>打開評等結果'
+    },
+    {
+        id: 'final-3',
         bgColor: '#006284',
         type: 'introduction',
-        logo: "",
+        mode: 'final',
+        title: '你的魔杖評等結果',
         messages: [
             {
                 component: (
@@ -405,6 +431,314 @@ const finalPages = [
             }
         ]
     },
+]
+
+const stories = [
+    {
+        id: 'story-1',
+        type: 'story',
+        bgColor: 'black',
+        messages: [
+            // {
+            //     text: '',
+            //     type: 'text',
+            //     placement: 'left',
+            // },
+            {
+                text: '你收起評等結果走出委員會的大門，\n\n因為忙著製作魔杖而饑腸轆轆的你\n被委員會旁的便當店吸引住目光\n\n在踏進便當店前，\n突然想起魔杖師間廣傳的流言：\n\n「人們似乎根據杖師們的魔杖而改變對你的態度。」\n\n你決定帶著剛做好的魔杖驗證一下這個流言...',
+                type: 'text',
+                placement: 'right',
+                marginTop: 20
+            },
+            {
+                button: '>前往便當店',
+                type: 'button',
+                action: 'next_page',
+                placement: 'right',
+            }
+        ]
+    },
+    {
+        id: 'story-2',
+        type: 'story',
+        bgColor: 'black',
+        messages: [
+            {
+                text: '你走進便當店，\n看完外單決定點餐後，\n走向便當店阿姨。\n\n阿姨看著你的魔杖說：\n',
+                type: 'text',
+                placement: 'left',
+                marginTop: 100
+            },
+            {
+                type: 'text',
+                conditions: [
+                    {
+                        text: '唉唷! 同學你這把法杖，怎麼都金光??\n來給我瞧瞧... 哇～夭壽喔！來阿姨請你吃我們店內最豪華的便當。不要客氣！',
+                        criteria: [
+                            "materials_include-one_{千元大鈔,鑽石,淚之珍珠}",
+                        ]
+                    },
+                    {
+                        text: '同學，最近物價上漲，店租也漲，你用法杖黏著50元...也不是說不行啦...但是你還有錢吃飯嗎?\n我們店裡不能只買白飯喔!',
+                        criteria: [
+                            "materials_include-one_{50元銅板}",
+                        ]
+                    },
+                    {
+                        text: '夭壽喔，這是什麼？你真thái-ko! 這虼蚻ka-tsua̍h 呢? 這你也敢拿來做法杖？真的是... 這便當給你，快閃閃去！',
+                        criteria: [
+                            "materials_include-one_{蟑螂觸鬚}",
+                        ]
+                    },
+                    {
+                        text: '同學，要好好吃才能當個偉大的魔法師喔！',
+                        criteria: [
+                        ]
+                    }
+                ],
+                placement: 'left',
+            },
+            {
+                button: '上一頁',
+                type: 'button',
+                action: 'prev_page',
+                placement: 'left',
+            },
+            {
+                button: '>離開便當店',
+                type: 'button',
+                action: 'next_page',
+                placement: 'right',
+            }
+        ]
+    },
+    {
+        id: 'story-3',
+        type: 'story',
+        bgColor: 'black',
+        messages: [
+            {
+                text: '．．．不管怎樣還是得到便當了，\n雖然便當店阿姨怪怪的，\n但阿姨的便當很好吃，\n你很快就吃完了。\n\n你決定去找住在隔壁村的好友分享魔杖成果，\n卻發現口袋裡的錢在買完便當後所剩無幾，\n眼看再一分鐘就下午三點，\n銀行的鐵門正準備拉下，\n「等等！我要領錢！」\n你邊大喊邊跑進銀行',
+                type: 'text',
+                placement: 'left',
+                marginTop: 30
+            },
+            {
+                type: 'text',
+                conditions: [
+                    {
+                        text: '快要下班的銀行行員大罵你把紙鈔弄髒，覺得怎麼可以把紙鈔用成這樣。旁邊一位剛辦完儲匯手續的客人走來安慰你，他說他欣賞你那充滿藝術感的設計，那位銀行行員並不瞭解你的魔杖是如此有價值（粉絲+1）。',
+                        criteria: [
+                            "materials_include-one_{千元大鈔}",
+                            "methods_include-one_{退火}"
+                        ]
+                    },
+                    {
+                        text: '快要下班的銀行行員眼睛閃亮亮的，滿懷感謝的心，稱讚你是一個為錢錢用心的錢之勇者，最喜歡你這樣的顧客了。你滿頭問號的收下這份誇讚。',
+                        criteria: [
+                            "materials_include-one_{千元大鈔}",
+                            "methods_not-include-one_{退火}"
+                        ]
+                    },
+                    {
+                        text: '銀行行員忙著手邊的工作，頭都來不及抬起來就說：「要辦理借貸了話，請去隔壁櫃台喔！」你去了借貸櫃台之後，發現前面有大排長龍的杖師正準備籌措開業基金。但你知道你還不打算開店，於是直接離開。',
+                        criteria: [
+                        ]
+                    }
+                ],
+                marginTop: 30,
+                placement: 'right',
+            },
+            {
+                button: '上一頁',
+                type: 'button',
+                action: 'prev_page',
+                placement: 'left',
+            },
+            {
+                button: '>離開銀行',
+                type: 'button',
+                action: 'next_page',
+                placement: 'right',
+            }
+        ]
+    },
+    {
+        id: 'story-4',
+        type: 'story',
+        bgColor: 'black',
+        messages: [
+            {
+                text: '從銀行離開後，眼看太陽快要下山，\n雖然聽說樹林裡有著危險的生物，\n但是你現在有著全新的強力法杖，\n抄點近路應該沒關係，你心想。\n\n才剛走進樹林五分鐘，\n突然有一片黑影掠過，\n你拿起魔杖壯膽，\n抬起頭\n',
+                type: 'text',
+                placement: 'left',
+                marginTop: 30
+            },
+            {
+                type: 'text',
+                conditions: [
+                    {
+                        text: '有一隻烏鴉正眼紅的看著你的法杖，作勢要搶奪你法杖上的物品，法杖上的每個閃光，成為了烏鴉怒氣的催化劑，你與它展開了一番纏鬥',
+                        criteria: [
+                                (userInfo) => {
+                                    if (userInfo.history.filter(data => data.type === "material").some(m => ["鑽石","淚之珍珠", "寶石塊", "寶石粉", "50元銅板"].includes(m.name)).length > 0) {
+                                        return userInfo.attack < 35*1.1
+                                    }
+                                    return userInfo.attack < 35
+                                }
+                        ]
+                    },
+                    {
+                        text: '發現有一直烏鴉，悵然地看著你的法杖。烏鴉意識到自己有可能成為收集品的瞬間，心中頓時充滿著狂喜與恐懼，複雜的情緒使他落下了所有的羽毛，急速老化而死。',
+                        criteria: [
+                            "materials_include-one_{鑽石,淚之珍珠,寶石塊,寶石粉,50元銅板}",
+                            "attack_>=_35",
+                            "materials_include-one_{鴉羽}"
+                        ]
+                    },
+                    {
+                        text: '但你沒有看到任何東西，但你總感覺有股視線在盯著你 -- 牠暫時還不想奪取，但牠會一直跟著你，等待你毫無防備的時候。',
+                        criteria: [
+                            (userInfo) => {
+                                if (userInfo.history.filter(data => data.type === "material").some(m => ["鑽石","淚之珍珠", "寶石塊", "寶石粉", "50元銅板"].includes(m.name)).length > 0) {
+                                    return userInfo.attack >= 35*1.1
+                                }
+                                return userInfo.attack >= 35
+                            }
+                        ]
+                    },
+                    {
+                        text: '你發現了一隻烏鴉，你隱約覺得牠好像在訕笑。你的魔杖對於這個偏執狂而言毫無吸引力，牠開始發出「鴉、鴉、鴉」的叫聲，並向你展現出他的戰利品，爾後，便拍拍翅膀走鴉了。',
+                        criteria: []
+                    }
+                ],
+                placement: 'left',
+            },
+            {
+                button: '上一頁',
+                type: 'button',
+                action: 'prev_page',
+                placement: 'left',
+            },
+            {
+                button: '>離開樹林',
+                type: 'button',
+                action: 'next_page',
+                placement: 'right',
+            }
+        ]
+    },
+    {
+        id: 'story-5',
+        type: 'story',
+        bgColor: 'black',
+        messages: [
+            {
+                text: '你總算走出樹林，\n深深感受到欲速則不達。\n\n在前往朋友家的路上，\n一隻長相奇異且巨大的貓突然擋在你眼前，\n它的身後是一座村莊，\n眼看著它即將要破壞了村莊，\n於是你掏出法杖施法，\n結果',
+                type: 'text',
+                placement: 'left',
+                marginTop: 30
+            },
+            {
+                type: 'text',
+                conditions: [
+                    {
+                        text: '魔貓直接倒在村落裡露出肚皮給你摸，但是村落因此全滅。',
+                        criteria: [
+                            "materials_include-one_{貓頭餅乾}",
+                        ]
+                    },
+                    {
+                        text: '魔貓摀住耳朵痛苦不堪，慢慢的縮小變成一隻平凡的小貓。你被村落的人們膜拜為勇者。',
+                        criteria: [
+                            "methods-[咒文加護]_>=_2"
+                        ]
+                    },
+                    {
+                        text: '魔貓發現你的戰利品比他還多，簡直是獵物殺手，他決定拜你為師，從此你有了一隻超巨大的夥伴了。',
+                        criteria: [
+                            "materials_include-one_{有毛毛蟲,蟑螂觸鬚,鴉羽,狼毫,斷尾}",
+                        ]
+                    },
+                    {
+                        text: '你你在魔貓的胃裡，以為得搭著帳篷度過餘生。但魔貓肚裡簡直是一座神奇的冒險之塔，你將開啟了全新的冒險篇章（本作未收錄）。',
+                        criteria: [
+                        ]
+                    }
+                ],
+                placement: 'left',
+            },
+            {
+                button: '上一頁',
+                type: 'button',
+                action: 'prev_page',
+                placement: 'left',
+            },
+            {
+                button: '>下一頁',
+                type: 'button',
+                action: 'next_page',
+                placement: 'right',
+            }
+        ]
+    },
+    {
+        id: 'story-6',
+        type: 'story',
+        bgColor: 'black',
+        messages: [
+            {
+                text: '統籌 什麼什麼工作坊\n\n遊戲設計\n\n劇本、角色設計\n\n介面設計\n程式設計\n美術設計　廠\n平衡測試　\n感謝名單\n',
+                type: 'text',
+                placement: 'left',
+                marginTop: 50,
+                textAlign: 'left'
+            },
+            {
+                text: '測試員的魔杖們',
+                marginTop: 50,
+                type: 'text',
+                placement: 'right',
+            },
+            {
+                button: '上一頁',
+                type: 'button',
+                action: 'prev_page',
+                placement: 'left',
+            },
+            {
+                button: '>闔上書本',
+                type: 'button',
+                action: 'next_page',
+                placement: 'right',
+            }
+        ]
+    },
+    {
+        id: 'story-7',
+        type: 'end',
+        bgColor: 'black',
+        messages: [
+            {
+                image: Logo,
+                type: 'image',
+                placement: 'left',
+                marginTop: 335
+            },
+            {
+                text: '> 製作新的魔杖 <',
+                type: 'text',
+                placement: 'right',
+                action: 'reset'
+            },
+            {
+                button: '上一頁',
+                type: 'button',
+                action: 'prev_page',
+                placement: 'left',
+            }
+        ]
+    }
 ]
 
 const streetPages = [
@@ -489,7 +823,8 @@ const streetPages = [
                                 criteria: [
                                 ]
                             }
-                        ]
+                        ],
+                        placement: 'right'
                     },
                     {
                         name: '便當店',
@@ -576,22 +911,24 @@ const streetPages = [
     }
 ]
 
+const initPages = () => {
+    const pages = Array(7).fill([0, 1, 2, 3]).reduce((acc, steps, index) => {
+        return acc.concat(steps.map(step => {
+            return {
+                ...templates[`round_${step}`],
+                round: `${index}_${step}`
+            }
+        }))
+    }, [])
+    return introPages.concat(pages).concat(finalPages).concat(stories)
+}
+
 
 const Board = () => {
 
     const [round, setRound] = useState(0)
     const [pageIndex, setPageIndex] = useState(0)
-    const [pages, setPages] = useState((()=>{
-        const pages = Array(7).fill([0, 1, 2, 3]).reduce((acc, steps, index) => {
-            return acc.concat(steps.map(step => {
-                return {
-                    ...templates[`round_${step}`],
-                    round: `${index}_${step}`
-                }
-            }))
-        }, [])
-        return introPages.concat(pages).concat(finalPages).concat(streetPages)
-    })())
+    const [pages, setPages] = useState(initPages())
     const [orderOfMonsters, setOrderOfMonsters] = useState(MONSTERS.sort(() => Math.random() - 0.5).map(m => m.id)) 
     const [currentMonsters, setCurrentMonsters] = useState([])
     const [orderOfActions, setOrderOfActions] = useState((()=>{
@@ -614,21 +951,12 @@ const Board = () => {
     const [currentSelectedAction, setSelectedAction] = useState()
     const [showNextButton, setShowNextButton] = useState(false)
     const [showConfirmModal, setShowConfirmModal] = useState(false)
+    const [imageUrl, setImageUrl] = useState('')
 
     const reset = () => {
         setRound(0)
         setPageIndex(0)
-        setPages(((()=>{
-            const pages = Array(7).fill([0, 1, 2, 3]).reduce((acc, steps, index) => {
-                return acc.concat(steps.map(step => {
-                    return {
-                        ...templates[`round_${step}`],
-                        round: `${index}_${step}`
-                    }
-                }))
-            }, [])
-            return introPages.concat(pages).concat(finalPages).concat(streetPages)
-        })()))
+        setPages(initPages())
         setOrderOfMonsters(MONSTERS.sort(() => Math.random() - 0.5).map(m => m.id))
         setOrderOfActions([...ACTIONS, ...ACTIONS].sort(() => Math.random() - 0.5).map(m => m.id))
         setUserInfo({
@@ -640,6 +968,7 @@ const Board = () => {
         setSelectedMaterial(null)
         setSelectedAction(null)
         setShowNextButton(false)
+        setImageUrl('')
     }
 
     const getMaterials = (currentRound, numPerRound) => {
@@ -920,6 +1249,345 @@ const Board = () => {
         })
     }
 
+    const renderMessageContent = (message) => {
+        const currentPage = pages[pageIndex]
+        const monster = currentMonsters[0]
+        switch(message.type) {
+            case 'title': {
+                return (
+                    <div 
+                        className="flex px-4 py-2 text-[20px] rounded-[20px] items-center justify-center mb-4 border-[2px] border-solid border-black"
+                        style={{
+                            borderColor: currentPage.bgColor === "black" || currentPage.bgColor === '#006284' ? "white" : "black",
+                            color: currentPage.bgColor === "black" || currentPage.bgColor === '#006284' ? "white" : "black", 
+                        }}
+                    >
+                        {message.text}
+                    </div>
+                )     
+            }
+            case 'text': {
+                const materials = monster?.materials || []
+                const valueOfAttackThisRound = (()=>{
+                    if (!currentSelectedMaterial || !currentSelectedAction) return 0
+
+                    return currentSelectedAction.actions.reduce((total, effect) => {
+                        switch(effect.operator) {
+                            case "+":
+                                return total + Number(effect.value)
+                            case "-":
+                                return total - Number(effect.value)
+                            case "*":
+                                return total * Number(effect.value)
+                            case "/":
+                                return total / Number(effect.value)
+                            default:
+                                return total
+                        }
+                    }, Number(currentSelectedMaterial?.value))
+                })()
+                const conditionText = message.conditions ? getResult(message.conditions)?.[0]?.text || '': ''
+                return (
+                    <p 
+                        className={`text-[18px] text-center max-w-[370px] whitespace-pre-line ${message.action ? "cursor-pointer" : ""}`}
+                        style={{
+                            color: currentPage.bgColor === "black" || currentPage.bgColor === '#006284' ? "white" : "black", lineHeight: 2,
+                            marginTop: message.marginTop,
+                            textAlign: message.textAlign
+                        }}
+                        onClick={()=>{
+                            if (message.action) {
+                                switch(message.action) {
+                                    case 'reset':
+                                        reset()
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }}
+                    >
+                        {conditionText}
+                        {(message?.text || '')
+                            .replace('{{round}}', round + 1)
+                            .replace('{{monster_name}}', monster?.name)
+                            .replace('{{monster_description}}', monster?.story)
+                            .replace('{{material_1}}', materials?.[0]?.name)
+                            .replace('{{material_2}}', materials?.[1]?.name)
+                            .replace('{{selected_material}}', currentSelectedMaterial?.name)
+                            .replace('{{material}}', currentSelectedMaterial?.name)
+                            .replace('{{method}}', currentSelectedAction?.name)
+                            .replace('{{attack_increment}}', valueOfAttackThisRound)
+                            .replace('{{num_methods}}', (()=>{
+                                const dict = {}
+                                return userInfo.history.filter(data => data.type === "action").reduce((prev, curr)=>{
+                                    if (dict[curr.id]) return prev
+                                    dict[curr.id] = true
+                                    return prev + 1
+                                }, 0)
+                            })())
+                            .replace('{{num_materials}}', (()=>{
+                                const dict = {}
+                                return userInfo.history.filter(data => data.type === "material").reduce((prev, curr)=>{
+                                    if (dict[curr.name]) return prev
+                                    dict[curr.name] = true
+                                    return prev + 1
+                                }, 0)
+                            })())
+                            .replace('{{total_attack}}', userInfo.attack)
+                        }
+                    </p>
+                )
+            }
+            case 'button':
+                return (
+                    <div 
+                        className={`cursor-pointer text-[16px] mt-auto ${message.placement === "left" ? "mr-auto" : "ml-auto"} underline`}
+                        style={{
+                            color: currentPage.bgColor === "black" || currentPage.bgColor === '#006284' ? "white" : "black",
+                            cursor: (() => {
+                                if (currentPage?.round?.split('_')[1] === "1" &&  !currentSelectedMaterial) return "not-allowed"
+                                if (currentPage?.round?.split('_')[1] === "2" &&  !currentSelectedAction) return "not-allowed"
+                                return "pointer"
+                            })()
+                        }}
+                        onClick={()=>{
+                            if (currentPage?.round?.split('_')[1] === "1" &&  !currentSelectedMaterial) return false
+                            if (currentPage?.round?.split('_')[1] === "2" &&  !currentSelectedAction) return false
+                            switch(message.action) {
+                                case 'next_page': {
+                                    if (currentPage.round && currentPage.round.split('_')[1] !== '2') handleConfirm() 
+                                    setPageIndex(index => index + 1)
+                                    break;
+                                }
+                                case 'prev_page': {
+                                    setPageIndex(index => index - 1)
+                                    break;
+                                }
+                                default: {
+                                    const targetPageIndex = pages.findIndex(page => page.id === message.action)
+                                    if (targetPageIndex >= 0) setPageIndex(targetPageIndex)
+                                    break
+                                }
+                            }
+                        }}
+                    >
+                        {message.button}
+                    </div>
+                )
+            case 'list':
+                return (
+                    <div className="flex flex-row items-start gap-10 mt-5 mb-3">
+                        {message.items.map(item => {
+                            return (
+                                <div className="flex flex-col items-center">
+                                    <div className="group relative flex items-center p-5 justify-center w-[115px] h-[180px] rounded-[15px] border border-solid border-[#707070]" style={{backgroundColor: item.bg}}>
+                                        {item.image && (() => {
+                                            if (item.image === "{{selected_material_image}}") return <img className="w-[75px] h-[75px]" src={currentSelectedMaterial?.image} />
+                                            if (item.image === "{{selected_action_image}}") return (
+                                                <div className="opacity-0 group-hover:opacity-100 absolute rounded-[15px] top-0 left-0 w-full h-full flex items-center justify-center bg-[rgba(255,255,255,.8)]">
+                                                    <img className="w-[75px] h-[75px]" src={currentSelectedAction.image}/>
+                                                </div>
+                                            )
+                                            return (
+                                                <span className="text-[75px]">{item.image}</span>
+                                            )
+                                        })()}
+                                        {item.title &&(<span className="text-[18px]">{item.title}</span>)}
+                                        {item.text && (
+                                            <p className="text-[16px] text-center">
+                                                {item.text.replace("{{selected_method_description}}", currentSelectedAction.description)}
+                                            </p>
+                                        )}
+                                    </div>
+                                </div>
+                            )
+                        })}
+                    </div>
+                )
+            case 'image':
+                return (
+                    <img 
+                        className="mt-5 w-[200px]" src={message.image}
+                        style={{
+                            marginTop: message.marginTop,
+                        }}
+                    />
+                )
+            case 'selection': {
+                const step = currentPage.round ?  currentPage.round.split('_')[1] : null
+                switch(step) {
+                    // select material
+                    case '1': {
+                        const materials = monster?.materials || []
+                        const beatMonster = materials.length >= 1  ? canGetMaterialFromMonster(materials[1]) : false
+                        return (
+                            <>
+                                <div 
+                                    className="flex px-4 py-2 text-[20px] rounded-[20px] items-center justify-center mt-15 mb-4"
+                                    style={{
+                                        color: currentPage.bgColor === "black" || currentPage.bgColor === '#006284' ? "white" : "black", 
+                                    }}
+                                >
+                                    {message.title}
+                                </div>
+                                <div className="flex flex-row items-start gap-10 mt-5 mb-3">
+                                    {materials.map((m) => (
+                                        <div 
+                                            className={`group relative bg-white flex flex-col items-center justify-center w-[145px] h-[200px] rounded-[15px] border border-solid border-[#707070] cusror-pointer`}
+                                            style={{
+                                                border: currentSelectedMaterial?.name === m.name ? "3px solid #2fad88fa" : "3px solid transparent",
+                                                cursor: canGetMaterialFromMonster(m) ? 'pointer' : 'not-allowed',
+                                                backgroundColor: canGetMaterialFromMonster(m) ? 'white' : '#e0e0e0'
+                                            }}
+                                            onClick={()=>{
+                                                if (canGetMaterialFromMonster(m)) selectMaterial({
+                                                    ...m,
+                                                    win: beatMonster
+                                                })
+                                            }}
+                                        >
+                                            <h3>{m.name}</h3>
+                                            {m.image && <img className="w-[75px] h-[75px] mt-1 mb-2"  src={m.image} />}
+                                            <p>{`攻擊＋ ${m.value}`}</p>
+                                            {(m.tooltip && !canGetMaterialFromMonster(m)) && (
+                                                <div className="opacity-0 group-hover:opacity-100 absolute text-sm rounded-[15px] top-0 left-0 w-full h-full flex px-1 items-center justify-center bg-[rgba(255,255,255,.8)]">
+                                                    {m.tooltip}
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            </>
+                        )
+                    }
+                    case '2': {
+                        return (
+                            <>
+                            <div 
+                                className="flex px-4 py-2 text-[20px] rounded-[20px] items-center justify-center mt-15 mb-4"
+                                style={{
+                                    color: currentPage.bgColor === "black" || currentPage.bgColor === '#006284' ? "white" : "black", 
+                                }}
+                            >
+                                {message.title}
+                            </div>
+                            <div className="flex flex-row items-start gap-10 mt-5 mb-3">
+                                {currentActions.map(action => (
+                                    <div 
+                                        className={`group relative bg-white flex flex-col p-2 items-center w-[145px] h-[200px] rounded-[15px] border border-solid border-[#707070] cursor-pointer`}
+                                        style={{
+                                            border: currentSelectedAction?.name === action.name ? "3px solid #2fad88fa" : "3px solid rgb(218, 201, 166)",
+                                        }}
+                                        onClick={()=>{
+                                            selectAction(action)
+                                        }}
+                                    >
+                                        <h2 className="mb-2">{action.name}</h2>
+                                        <p className="text-sm">{action.description}</p>
+                                        <div className="flex flex-col items-start w-full">
+                                            <h3>獲得效果:</h3>
+                                            {action.actions.map(e => (
+                                                <p className="text-sm">
+                                                    {`選取素材攻擊力  ${e.operator} ${e.value}`}
+                                                </p>
+                                            ))}
+                                        </div>
+                                        <div className="opacity-0 group-hover:opacity-100 absolute rounded-[15px] top-0 left-0 w-full h-full flex items-center justify-center bg-[rgba(255,255,255,.8)]">
+                                            {action.image && <img className="w-[75px] h-75px" src={action.image}/>}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            </>
+                        )
+                    }
+                    default:
+                        return null
+                }
+            }
+            case 'component':
+                return message.component
+            case 'places':
+                return (
+                    <div className="flex flex-row items-start w-[700px] gap-10 flex-wrap justify-center">
+                        {message.items.map(item => (
+                            <div 
+                                className={`h-full bg-white flex flex-col p-5 items-center w-[145px] h-[200px] rounded-[15px] border border-solid border-[#707070] cursor-pointer`}
+                                onClick={()=>{
+                                    // selectAction(action)
+                                    if (item.name === "魔杖評等委員會") {
+                                        const targetPageIndex = pages.findIndex(page => page.id === "final-2")
+                                        setPageIndex(targetPageIndex)
+                                    } else if (item.name === "魔杖製作坊") {
+                                        setShowConfirmModal(true)
+                                    } else {
+                                        const targetPageIndex = pages.findIndex(page => page.id === "street-2")
+                                        setPages(ps => {
+                                            return ps.map((p, index) => {
+                                                if (index === targetPageIndex) {
+                                                    const result = getResult(item.results)?.[0]
+                                                    return {
+                                                        ...p,
+                                                        messages: [
+                                                            {
+                                                                text: `你來到 ${item.name}，遇到 ${item.owner}`,
+                                                                type: 'text'
+                                                            },
+                                                            {
+                                                                text: result?.description || "",
+                                                                type: 'text'
+                                                            },
+                                                            {
+                                                                button: '>回到街上',
+                                                                action: 'street-1',
+                                                                type: 'button'
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                                return p
+                                            })
+                                        })
+                                        setPageIndex(targetPageIndex)
+                                    }
+                                }}
+                            >
+                                {<span className="mt-5 mb-1 text-[60px]">{item.icon}</span>}
+                                <span className="text-[24px] mt-auto text-center">{item.name}</span>
+                            </div>
+                        ))}
+                    </div>
+                )
+            case 'titles': {
+                const fitTitles = TITLES.filter(t => {
+                    return canGetTitle(t)
+                })
+                return (
+                    <div className="flex flex-row items-center justify-center mt-5 max-w-[700px] gap-10 flex-wrap">
+                        {fitTitles.map(title => (
+                            <div 
+                                className="flex py-4 px-2 relative items-center justify-center w-[200px]"
+                                // style={{
+                                //     backgroundImage: `url(${TitleBg})`,
+                                //     backgroundRepeat: 'no-repeat',
+                                //     backgroundAttachment: 'fixed',
+                                //     backgroundPosition: 'center',
+                                //     backgroundSize: 'contain'
+                                // }}
+                            >
+                                <img className="absolute w-full left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2" src={TitleBg}/>
+                                <span className="text-white text-[24px]">{title.name}</span>
+                            </div>
+                        ))}
+                    </div>
+                )
+            }
+            default:
+                return null
+        }
+    }
+
     const renderPage = () => {
         const currentPage = pages[pageIndex]
         const monster = currentMonsters[0]
@@ -932,39 +1600,88 @@ const Board = () => {
                         backgroundColor: currentPage.bgColor
                     }}
                 >
-                    <p className={`text-[24px] text-center text-white mb-4`}>
-                        🧙開始加工魔杖
-                    </p>
-                    <p className={`text-[24px] text-center text-white mb-15`}>
-                        {`七道工法中的第 ${round + 1} 道工法`}
-                    </p>
-                    <div className="flex flex-row items-start">
-                        <div className="flex flex-col w-[350px] items-center mr-5">
-                            <span className="text-white text-[24px] text-left w-full mb-1">你遇到了...</span>
-                            <img key={monster.name} className="w-[350px] h-[350px]" src={monster.image}/>
-                            <h2 className="text-white text-[32px] mt-4">{monster.name}</h2>
-                        </div>
+                    <Book>
+                        <Page>
+                            <div className="flex flex-col w-[350px] items-center mr-5">
+                                <span className="text-white text-[24px] text-left w-full mb-1">你遇到了...</span>
+                                <img key={monster.name} className="w-[350px] h-[350px]" src={monster.image}/>
+                                <h2 className="text-white text-[32px] mt-4">{monster.name}</h2>
+                            </div>
+                        </Page>
+                        <Page>
+                            <div 
+                                className="flex mt-5 px-4 py-2 text-[20px] rounded-[20px] items-center justify-center mb-4 border-[2px] border-solid border-black"
+                                style={{
+                                    borderColor: currentPage.bgColor === "black" || currentPage.bgColor === '#006284' ? "white" : "black",
+                                    color: currentPage.bgColor === "black" || currentPage.bgColor === '#006284' ? "white" : "black", 
+                                }}
+                            >
+                                開始加工魔杖
+                            </div>
+                            <p className={`text-[24px] text-center text-white mb-5`}>
+                                {`七道工法中的第 ${round + 1} 道工法`}
+                            </p>
+                            <div className="flex flex-row items-start">
+                                <div className="flex flex-col w-[370px] mt-5 min-h-[380px]">
+                                    <MessageLines 
+                                        description={monster.description}
+                                        messages={messages} 
+                                        onEnd={() => setShowNextButton(true)}
+                                    />
 
-                        <div className="flex flex-col w-[650px] mt-5 min-h-[380px]">
-                            <MessageLines 
-                                description={monster.description}
-                                messages={messages} 
-                                onEnd={() => setShowNextButton(true)}
-                            />
-
-                            {showNextButton && (
-                                <div
-                                     className="cursor-pointer text-[16px] mt-auto text-white ml-auto"
-                                     onClick={()=>{
-                                         setPageIndex(index => index + 1)
-                                         setShowNextButton(false)
-                                    }}
-                                >
-                                    {"> NEXT <"}
+                                    {showNextButton && (
+                                        <div
+                                            className="cursor-pointer text-[16px] mt-auto text-white ml-auto"
+                                            onClick={()=>{
+                                                setPageIndex(index => index + 1)
+                                                setShowNextButton(false)
+                                            }}
+                                        >
+                                            {"> NEXT <"}
+                                        </div>
+                                    )}
                                 </div>
-                            )}
-                        </div>
-                    </div>
+                            </div>
+                        </Page>
+                    </Book>
+                </div>
+            )
+        }
+
+        if (currentPage.mode === "final") {
+            return (
+                <div 
+                    className={`flex flex-col items-center w-full min-h-screen pt-[80px]`}
+                    style={{
+                        backgroundColor: currentPage.bgColor
+                    }}
+                >
+                    <ResultPage 
+                        currentPage={currentPage} 
+                        goto={setPageIndex} 
+                        onChangeImageUrl={url => setImageUrl(url)}
+                        uploadedImageUrl={imageUrl}
+                        fitTitles={TITLES.filter(t => canGetTitle(t))}
+                        personalResult={{
+                            attack: userInfo.attack,
+                            totalMethods: (()=>{
+                                const dict = {}
+                                return userInfo.history.filter(data => data.type === "action").reduce((prev, curr)=>{
+                                    if (dict[curr.id]) return prev
+                                    dict[curr.id] = true
+                                    return prev + 1
+                                }, 0)
+                            })(),
+                            totalMaterials: (()=>{
+                                const dict = {}
+                                return userInfo.history.filter(data => data.type === "material").reduce((prev, curr)=>{
+                                    if (dict[curr.name]) return prev
+                                    dict[curr.name] = true
+                                    return prev + 1
+                                }, 0)
+                            })()
+                        }}
+                    />
                 </div>
             )
         }
@@ -975,265 +1692,35 @@ const Board = () => {
                     backgroundColor: currentPage.bgColor
                 }}
             >
-                <div className={`flex flex-col items-center h-screen pb-[50px] px-[20px] max-w-[800px]`} style={{paddingTop: currentPage.logo ? 130 : 80}}>
-                    {currentPage.logo && <div className="text-[120px] mb-6">{currentPage.logo}</div>}
-                    {currentPage.messages.map(message => {
-                        switch(message.type) {
-                            case 'text': {
-                                const materials = monster?.materials || []
-                                return (
-                                    <p 
-                                        className={`text-[24px] text-center`}
-                                        style={{
-                                            color: currentPage.bgColor === "black" || currentPage.bgColor === '#006284' ? "white" : "black", lineHeight: 2
-                                        }}
-                                    >
-                                        {message.text
-                                            .replace('{{round}}', round + 1)
-                                            .replace('{{monster_name}}', monster?.name)
-                                            .replace('{{monster_description}}', monster?.story)
-                                            .replace('{{material_1}}', materials?.[0]?.name)
-                                            .replace('{{material_2}}', materials?.[1]?.name)
-                                            .replace('{{selected_material}}', currentSelectedMaterial?.name)
-                                            .replace('{{material}}', currentSelectedMaterial?.name)
-                                            .replace('{{method}}', currentSelectedAction?.name)
-                                            .replace('{{num_methods}}', (()=>{
-                                                const dict = {}
-                                                return userInfo.history.filter(data => data.type === "action").reduce((prev, curr)=>{
-                                                    if (dict[curr.id]) return prev
-                                                    dict[curr.id] = true
-                                                    return prev + 1
-                                                }, 0)
-                                            })())
-                                            .replace('{{num_materials}}', (()=>{
-                                                const dict = {}
-                                                return userInfo.history.filter(data => data.type === "material").reduce((prev, curr)=>{
-                                                    if (dict[curr.name]) return prev
-                                                    dict[curr.name] = true
-                                                    return prev + 1
-                                                }, 0)
-                                            })())
-                                            .replace('{{total_attack}}', userInfo.attack)
-                                        }
-                                    </p>
-                                )
-                            }
-                            case 'button':
-                                return (
-                                    <div 
-                                        className="cursor-pointer text-[16px] mt-auto underline"
-                                        style={{
-                                            color: currentPage.bgColor === "black" || currentPage.bgColor === '#006284' ? "white" : "black",
-                                            cursor: (() => {
-                                                if (currentPage?.round?.split('_')[1] === "1" &&  !currentSelectedMaterial) return "not-allowed"
-                                                if (currentPage?.round?.split('_')[1] === "2" &&  !currentSelectedAction) return "not-allowed"
-                                                return "pointer"
-                                            })()
-                                        }}
-                                        onClick={()=>{
-                                            if (currentPage?.round?.split('_')[1] === "1" &&  !currentSelectedMaterial) return false
-                                            if (currentPage?.round?.split('_')[1] === "2" &&  !currentSelectedAction) return false
-                                            switch(message.action) {
-                                                case 'next_page': {
-                                                    if (currentPage.round && currentPage.round.split('_')[1] !== '2') handleConfirm() 
-                                                    setPageIndex(index => index + 1)
-                                                    break;
-                                                }
-                                                default: {
-                                                    const targetPageIndex = pages.findIndex(page => page.id === message.action)
-                                                    if (targetPageIndex >= 0) setPageIndex(targetPageIndex)
-                                                    break
-                                                }
-                                            }
-                                        }}
-                                    >
-                                        {message.button}
-                                    </div>
-                                )
-                            case 'list':
-                                return (
-                                    <div className="flex flex-row items-start gap-10 mt-5 mb-3">
-                                        {message.items.map(item => {
-                                            return (
-                                                <div className="flex flex-col items-center">
-                                                    {item.title &&(<span className="text-[24px] mb-1">{item.title}</span>)}
-                                                    <div className="group relative flex items-center p-5 justify-center w-[145px] h-[200px] rounded-[15px] border border-solid border-[#707070]" style={{backgroundColor: item.bg}}>
-                                                        {item.image && (() => {
-                                                            if (item.image === "{{selected_material_image}}") return <img className="w-[75px] h-[75px]" src={currentSelectedMaterial?.image} />
-                                                            if (item.image === "{{selected_action_image}}") return (
-                                                                <div className="opacity-0 group-hover:opacity-100 absolute rounded-[15px] top-0 left-0 w-full h-full flex items-center justify-center bg-[rgba(255,255,255,.8)]">
-                                                                    <img className="w-[75px] h-[75px]" src={currentSelectedAction.image}/>
-                                                                </div>
-                                                            )
-                                                            return (
-                                                                <span className="text-[75px]">{item.image}</span>
-                                                            )
-                                                        })()}
-                                                        {item.text && (
-                                                            <p className="text-[16px] text-center">
-                                                                {item.text.replace("{{selected_method_description}}", currentSelectedAction.description)}
-                                                            </p>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                            )
-                                        })}
-                                    </div>
-                                )
-                            case 'image':
-                                return (
-                                    <img className="mt-15 w-[200px]" src={message.image}/>
-                                )
-                            case 'selection': {
-                                const step = currentPage.round ?  currentPage.round.split('_')[1] : null
-                                switch(step) {
-                                    // select material
-                                    case '1': {
-                                        const materials = monster?.materials || []
-                                        const beatMonster = materials.length >= 1  ? canGetMaterialFromMonster(materials[1]) : false
-                                        return (
-                                            <div className="flex flex-row items-start gap-10 mt-5 mb-3">
-                                                {materials.map((m) => (
-                                                    <div 
-                                                        className={`bg-white flex flex-col items-center justify-center w-[145px] h-[200px] rounded-[15px] border border-solid border-[#707070] cusror-pointer`}
-                                                        style={{
-                                                            border: currentSelectedMaterial?.name === m.name ? "3px solid #2fad88fa" : "3px solid transparent",
-                                                            cursor: canGetMaterialFromMonster(m) ? 'pointer' : 'not-allowed',
-                                                            backgroundColor: canGetMaterialFromMonster(m) ? 'white' : '#e0e0e0'
-                                                        }}
-                                                        onClick={()=>{
-                                                            if (canGetMaterialFromMonster(m)) selectMaterial({
-                                                                ...m,
-                                                                win: beatMonster
-                                                            })
-                                                        }}
-                                                    >
-                                                        <h3>{m.name}</h3>
-                                                        {m.image && <img className="w-[75px] h-[75px] mt-1 mb-2"  src={m.image} />}
-                                                        <p>{`攻擊＋ ${m.value}`}</p>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        )
-                                    }
-                                    case '2': {
-                                        return (
-                                            <div className="flex flex-row items-start gap-10 mt-5 mb-3">
-                                                {currentActions.map(action => (
-                                                    <div 
-                                                        className={`group relative bg-white flex flex-col p-2 items-center w-[145px] h-[200px] rounded-[15px] border border-solid border-[#707070] cursor-pointer`}
-                                                        style={{
-                                                            border: currentSelectedAction?.name === action.name ? "3px solid #2fad88fa" : "3px solid rgb(218, 201, 166)",
-                                                        }}
-                                                        onClick={()=>{
-                                                            selectAction(action)
-                                                        }}
-                                                    >
-                                                        <h2 className="mb-2">{action.name}</h2>
-                                                        <p className="text-sm">{action.description}</p>
-                                                        <div className="flex flex-col items-start w-full">
-                                                            <h3>獲得效果:</h3>
-                                                            {action.actions.map(e => (
-                                                                <p className="text-sm">
-                                                                    {`選取素材攻擊力  ${e.operator} ${e.value}`}
-                                                                </p>
-                                                            ))}
-                                                        </div>
-                                                        <div className="opacity-0 group-hover:opacity-100 absolute rounded-[15px] top-0 left-0 w-full h-full flex items-center justify-center bg-[rgba(255,255,255,.8)]">
-                                                            {action.image && <img className="w-[75px] h-75px" src={action.image}/>}
-                                                        </div>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        )
-                                    }
-                                    default:
-                                        return null
-                                }
-                            }
-                            case 'component':
-                                return message.component
-                            case 'places':
-                                return (
-                                    <div className="flex flex-row items-start w-[700px] gap-10 flex-wrap justify-center">
-                                        {message.items.map(item => (
-                                            <div 
-                                                className={`h-full bg-white flex flex-col p-5 items-center w-[145px] h-[200px] rounded-[15px] border border-solid border-[#707070] cursor-pointer`}
-                                                onClick={()=>{
-                                                    // selectAction(action)
-                                                    if (item.name === "魔杖評等委員會") {
-                                                        const targetPageIndex = pages.findIndex(page => page.id === "final-2")
-                                                        setPageIndex(targetPageIndex)
-                                                    } else if (item.name === "魔杖製作坊") {
-                                                        setShowConfirmModal(true)
-                                                    } else {
-                                                        const targetPageIndex = pages.findIndex(page => page.id === "street-2")
-                                                        setPages(ps => {
-                                                            return ps.map((p, index) => {
-                                                                if (index === targetPageIndex) {
-                                                                    const result = getResult(item.results)?.[0]
-                                                                    return {
-                                                                        ...p,
-                                                                        messages: [
-                                                                            {
-                                                                                text: `你來到 ${item.name}，遇到 ${item.owner}`,
-                                                                                type: 'text'
-                                                                            },
-                                                                            {
-                                                                                text: result?.description || "",
-                                                                                type: 'text'
-                                                                            },
-                                                                            {
-                                                                                button: '>回到街上',
-                                                                                action: 'street-1',
-                                                                                type: 'button'
-                                                                            }
-                                                                        ]
-                                                                    }
-                                                                }
-                                                                return p
-                                                            })
-                                                        })
-                                                        setPageIndex(targetPageIndex)
-                                                    }
-                                                }}
-                                            >
-                                                {<span className="mt-5 mb-1 text-[60px]">{item.icon}</span>}
-                                                <span className="text-[24px] mt-auto text-center">{item.name}</span>
-                                            </div>
-                                        ))}
-                                    </div>
-                                )
-                            case 'titles': {
-                                const fitTitles = TITLES.filter(t => {
-                                    return canGetTitle(t)
-                                })
-                                return (
-                                    <div className="flex flex-row items-center justify-center mt-5 max-w-[700px] gap-10 flex-wrap">
-                                        {fitTitles.map(title => (
-                                             <div 
-                                                className="flex py-4 px-2 relative items-center justify-center w-[200px]"
-                                                // style={{
-                                                //     backgroundImage: `url(${TitleBg})`,
-                                                //     backgroundRepeat: 'no-repeat',
-                                                //     backgroundAttachment: 'fixed',
-                                                //     backgroundPosition: 'center',
-                                                //     backgroundSize: 'contain'
-                                                // }}
-                                            >
-                                                <img className="absolute w-full left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2" src={TitleBg}/>
-                                                <span className="text-white text-[24px]">{title.name}</span>
-                                            </div>
-                                        ))}
-                                    </div>
-                                )
-                            }
-                            default:
-                                return null
-                        }
-
-                    })}
-                </div>
+                <Book 
+                    isStart={pageIndex === 0}
+                    isEnd={pageIndex === pages.length - 1}
+                >
+                    {currentPage.type === "story" && (
+                        <div 
+                            className="absolute left-15 top-13 text-white text-base cursor-pointer"
+                            onClick={()=>{
+                                const index = pages.findIndex(p => p.id === "final-3")
+                                setPageIndex(index)
+                            }}
+                        >
+                            查看評等結果
+                        </div>
+                    )}
+                {/* <div className={`flex flex-col items-center h-screen pb-[50px] px-[20px] max-w-[800px]`} style={{paddingTop: currentPage.logo ? 130 : 80}}> */}
+                    <Page>
+                        {currentPage.messages.filter(m => m.placement === "left").map(message => {
+                            return renderMessageContent(message)
+                        })}
+                    </Page>
+                    <Page>
+                        <>
+                        {currentPage.messages.filter(m => m.placement !== "left").map(message => {  
+                            return renderMessageContent(message)
+                        })}
+                        </>
+                    </Page>
+                </Book>
             </div>
         )
 
@@ -1242,6 +1729,7 @@ const Board = () => {
     return (
         <>
             {renderPage()}
+            {/* <Book></Book> */}
             {showConfirmModal && (
                 <div className="fixed top-0 left-0 w-screen h-screen bg-[rgba(0,0,0,0.6)] z-99">
                     <div className="flex flex-col items-center py-5 px-10 w-[350px] h-[200px] rounded-[10px] bg-white absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">

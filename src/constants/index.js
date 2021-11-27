@@ -4,7 +4,7 @@ export const ACTIONS = [
         id: '1',
         name: '削直',
         type: 'action',
-        description: '選擇連續三格不轉彎的格子，材料的長度要延展到這三格中',
+        description: '橫跨右三格，畫下材料。',
         image: 'https://i.imgur.com/IeaWm7b.png',
         actions: [{
             value: 2,
@@ -16,7 +16,7 @@ export const ACTIONS = [
         id: '2',
         name: '精煉',
         type: 'action',
-        description: '將材料的剪影畫在中間的格子中',
+        description: '在正中格內，畫下材料，之後把材料塗黑。',
         image: 'https://i.imgur.com/LZdajIp.png',
         actions: [{
             value: 3,
@@ -29,7 +29,7 @@ export const ACTIONS = [
         name: '咒文加護',
         type: 'action',
         image: 'https://i.imgur.com/JYyosER.png',
-        description: '將材料名以重複文字方式繞圈，寫在上方格中',
+        description: '在上中格內，重複寫下材料名稱文字，以形成加護。',
         actions: [{
             value: 2,
             operator: "+",
@@ -40,8 +40,8 @@ export const ACTIONS = [
         id: '4',
         name: '熔接',
         type: 'action',
-        image: 'https://i.imgur.com/Zs2PbMr.png',
-        description: '將材料焊接在右方三格之一，需與法仗串聯',
+        image: 'https://i.imgur.com/AjlyEuF.png',
+        description: '在右三格之一，畫下材料。',
         actions: [{
             value: 1.5,
             operator: "*",
@@ -53,7 +53,7 @@ export const ACTIONS = [
         name: '加冕',
         type: 'action',
         image: 'https://i.imgur.com/Zs2PbMr.png',
-        description: '把非生物屬性的素材畫在目前格子上有生物屬性的頭上',
+        description: '在任何位置，畫下任何動物的頭，並在該動物頭上畫下材料。',
         actions: [{
             value: 2,
             operator: "+",
@@ -65,7 +65,7 @@ export const ACTIONS = [
         name: '抱佛腳',
         type: 'action',
         image: 'https://i.imgur.com/bVXyKNq.png',
-        description: '在15秒內將素材畫在任一格內',
+        description: '在任何位置，畫下任何動物的腳，並在該腳上畫下材料。',
         actions: [{
             value: 1,
             operator: "+",
@@ -77,7 +77,7 @@ export const ACTIONS = [
         name: '退火',
         type: 'action',
         image: ' https://i.imgur.com/YVPNyZU.png',
-        description: '把整張紙揉皺後，將材料放在最皺的一格中',
+        description: '把整張紙揉皺後，在最皺的一格內，畫下材料。',
         actions: [{
             value: 0,
             operator: "+",
@@ -89,9 +89,117 @@ export const ACTIONS = [
         name: '鑲嵌',
         type: 'action',
         image: 'https://i.imgur.com/WltOkfW.png',
-        description: '把材料嵌入法杖最粗的那一格',
+        description: '在法杖最粗的那一格內，畫下材料。',
         actions: [{
             value: 2,
+            operator: "+",
+            target: 'attack'
+        }]
+    },
+    {
+        id: '9',
+        name: '火焰附魔',
+        type: 'action',
+        image: 'https://imgur.com/C2ioMxR.png',
+        description: '在任意位置，畫下以火焰包覆的材料',
+        actions: [{
+            value: 0,
+            operator: "+",
+            target: 'attack'
+        }]
+    },
+    {
+        id: '10',
+        name: '雷電附魔',
+        type: 'action',
+        image: 'https://imgur.com/C2ioMxR.png',
+        description: '在任意位置，畫下以閃電包覆的材料',
+        actions: [{
+            value: 0,
+            operator: "+",
+            target: 'attack'
+        }]
+    },
+    {
+        id: '11',
+        name: '寒冰附魔',
+        type: 'action',
+        image: 'https://imgur.com/TBBdDi0.png',
+        description: '在任意位置，畫下以寒冰包覆的材料',
+        actions: [{
+            value: 0,
+            operator: "+",
+            target: 'attack'
+        }]
+    },
+    {
+        id: '12',
+        name: '花紋蝕刻',
+        type: 'action',
+        image: 'https://imgur.com/6xLnpXK.png',
+        description: '把材料畫滿整枝魔杖',
+        actions: [{
+            value: 1.5,
+            operator: "*",
+            target: 'attack'
+        }]
+    },
+    {
+        id: '13',
+        name: '咒文蝕刻',
+        type: 'action',
+        image: 'https://imgur.com/N9AzMPv.png',
+        description: '把材料名稱寫滿整枝魔杖',
+        actions: [{
+            value: 1.5,
+            operator: "*",
+            target: 'attack'
+        }]
+    },
+    {
+        id: '14',
+        name: '昇華',
+        type: 'action',
+        image: 'https://imgur.com/tn2J3w8.png',
+        description: '在上排三格中，畫下雲及材料。',
+        actions: [{
+            value: 1.5,
+            operator: "*",
+            target: 'attack'
+        }]
+    },
+    {
+        id: '15',
+        name: '祈禱',
+        type: 'action',
+        image: 'https://imgur.com/5leQ8uj.png',
+        description: '眼睛閉上後，在紙上畫下材料。',
+        actions: [{
+            value: 2,
+            operator: "+",
+            target: 'attack'
+        }]
+    },
+    {
+        id: '16',
+        name: '攝食變身',
+        type: 'action',
+        image: 'https://imgur.com/hO6ttgf.png',
+        description: '在下中格中，畫下被材料吸引來的掠食者。',
+        actions: [{
+            value: 1.5,
+            operator: "*",
+            target: 'attack'
+        }]
+    },
+    {
+        id: '17',
+        name: '找碴的魔手',
+        type: 'action',
+        image: 'https://imgur.com/jdJNPz8.png',
+        description: '在任意位置，使用非慣用手畫下材料。',
+        actions: [{
+            value: 3,
             operator: "+",
             target: 'attack'
         }]
@@ -123,6 +231,7 @@ export const MONSTERS = [
                 type: 'material',
                 category: 'reward',
                 image: 'https://i.imgur.com/bsmEgMY.png',
+                tooltip: '你發出的法力過大，驚嚇到了結晶巨魔，使它自發分解了'
             }
         ]
     },
@@ -149,7 +258,8 @@ export const MONSTERS = [
                 criteria: ["attack_>=_15"],
                 type: 'material',
                 category: 'reward',
-                image: 'https://i.imgur.com/F4txJEA.png'
+                image: 'https://i.imgur.com/F4txJEA.png',
+                tooltip: '你的話中似乎有些謊言'
             }
         ]
     },
@@ -177,6 +287,7 @@ export const MONSTERS = [
                 type: 'material',
                 category: 'reward',
                 image: 'https://i.imgur.com/YwnDGBr.png',
+                tooltip: '貓仔技術高超，你的魔杖打不贏。'
             }
         ]
     },
@@ -204,6 +315,7 @@ export const MONSTERS = [
                 type: 'material',
                 category: 'reward',
                 image: 'https://i.imgur.com/E5zAXZa.png',
+                tooltip: '你在錯誤的時間到訪，烏鴉正看守著寶石。'
             }
         ]
     },
@@ -231,6 +343,7 @@ export const MONSTERS = [
                 type: 'material',
                 category: 'reward',
                 image: 'https://i.imgur.com/VSrW6xZ.png',
+                tooltip: '你的攻擊只能傷到它一毫'
             }
         ]
     },
@@ -258,6 +371,7 @@ export const MONSTERS = [
                 type: 'material',
                 category: 'reward',
                 image: 'https://i.imgur.com/tlomktL.png',
+                tooltip: '你攻擊不夠快，讓ATM魔人逃走了'
             }
         ]
     },
@@ -285,6 +399,7 @@ export const MONSTERS = [
                 type: 'material',
                 category: 'reward',
                 image: 'https://i.imgur.com/BBSyHvI.png',
+                tooltip: '壁虎過於膽小，你剛舉起法杖他就抱著午餐逃跑了。'
             }
         ]
     },
@@ -312,6 +427,7 @@ export const MONSTERS = [
                 type: 'material',
                 category: 'reward',
                 image: 'https://i.imgur.com/4YOwx9O.png',
+                tooltip: '食人貝力大無窮，你的魔杖打不贏。'
             }
         ]
     }
@@ -336,7 +452,8 @@ export const TITLES = [
         name: '魔杖大師',
         criteria: [
             "attack_>_40",
-        ]
+        ],
+        description: "你能打遍天下無敵手，史上最強非你莫屬"
     },
     {
         id: '魔杖前輩',
@@ -344,49 +461,56 @@ export const TITLES = [
         criteria: [
             "attack_<=_40",
             "attack_>=_35",
-        ]
+        ],
+        description: '魔杖竟有頑強的法力，你正朝向大師之路'
     },
     {
         id: '魔杖學徒',
         name: '魔杖學徒',
         criteria: [
             "attack_<=_30"
-        ]
+        ],
+        description: "你的魔杖還算不錯，多練習必定表現非凡"
     },
     {
         id: '可愛鼯鼠',
         name: '可愛鼯鼠',
         criteria: [
             "methods-num_>=_5"
-        ]
+        ],
+        description: '你什麼都會，正如能飛天又能爬樹的鼯鼠般，什麼都難不倒可愛的你。'
     },
     {
         id: '職人精神',
         name: '職人精神',
         criteria: [
             "methods-num_<=_3"
-        ]
+        ],
+        description: "堅持只用少數的材料來做出厲害的法杖"
     },
     {
         id: '賞金獵人',
         name: '賞金獵人',
         criteria: [
             "winner-rewards_>=_5"
-        ]
+        ],
+        description: "對於採集，你幾乎不屑一顧 -- 只有親手奪來的才能證明，你是極少數的強者。"
     },
     {
         id: '魔法佛祖',
         name: '魔法佛祖',
         criteria: [
             "methods_include-one_{抱佛腳}"
-        ]
+        ],
+        description: "佛祖的兩隻腳被你抱得太緊，只好也讓你成佛"
     },
     {
         id: '拓荒者',
         name: '拓荒者',
         criteria: [
             "free-rewards_=_7"
-        ]
+        ],
+        description: "在採集的過程中從未揮動魔杖——你若不是極端和平主義者，就是超級膽小鬼。"
     },
     {
         id: '善心人士',
@@ -394,55 +518,71 @@ export const TITLES = [
         criteria: [
             "free-rewards_=_7",
             "win-rounds_=_7"
-        ]
+        ],
+        description: "你具有顆善良的心，即時獲勝也只撿取所需並不貪求"
     },
     {
         id: '超級有錢',
         name: '超級有錢',
         criteria: [
             "materials_include-one_{千元大鈔,寶石塊,鑽石}"
-        ]
+        ],
+        description: "如果缺錢的話，你的魔杖在當鋪似乎能值不少。"
     },
     {
         id: '魔法首富',
         name: '超級有錢',
         criteria: [
             "materials_include-all_{千元大鈔,寶石塊,鑽石}"
-        ]
+        ],
+        description: "你的魔杖閃閃發光，令人難以直視，分不清是魔法的力量還是金錢的力量。"
     },
     {
         id: '戰鬥大師',
         name: '戰鬥大師',
         criteria: [
             "win-rounds_=_7"
-        ]
+        ],
+        description: "少數的強者才能像你一樣屢戰屢勝"
     },
     {
         id: '一級玩家',
         name: '一級玩家',
         criteria: [
             "materials_include-all_{毛毛蟲,蟑螂觸鬚,狼毫,鴉羽}"
-        ]
+        ],
+        description: "你具備極大的潛力，多多練習朝著戰鬥大師前進"
+    },
+    {
+        id: '生物學者',
+        name: '生物學者',
+        criteria: [
+            "materials_include-all_{毛毛蟲,蟑螂觸鬚,鴉羽,狼毫}"
+        ],
+        description: "你致力於收集珍稀的生物，這使你的魔杖栩栩如生。等等..它剛剛是不是動了？"
     },
     {
         id: '奇幻生物學者',
         name: '奇幻生物學者',
         criteria: [
             "materials_include-all_{寄生之眼,淚之珍珠,斷尾}"
-        ]
+        ],
+        description: "你致力於收集珍稀的生物，這使你的魔杖栩栩如生。等等..它剛剛是不是動了？"
     },
     {
         id: '貓咪好朋友',
         name: '貓咪好朋友',
         criteria: [
             "materials_include-one_{貓頭餅乾}"
-        ]
+        ],
+        description: "你的魔杖上黏有「貓頭餅乾」"
     },
     {
         id: '魔法影印機',
         name: '魔法影印機',
         criteria: [
             "methods-[咒文加護]_>=_2"
-        ]
+        ],
+        description: "一、二複印，你施展的咒文技法如火純青，猶如一台魔法影印機。"
     },
 ]
