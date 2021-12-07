@@ -1041,7 +1041,7 @@ const streetPages = [
 ]
 
 const initPages = () => {
-    const pages = Array(1).fill([0, 1, 2, 3]).reduce((acc, steps, index) => {
+    const pages = Array(7).fill([0, 1, 2, 3]).reduce((acc, steps, index) => {
         return acc.concat(steps.map(step => {
             return {
                 ...templates[`round_${step}`],
